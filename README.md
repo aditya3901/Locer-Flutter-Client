@@ -1,7 +1,7 @@
 # locer
 
 <p align="center">
-  <img src="https://github.com/aditya3901/aditya3901/blob/main/Locer_1.png"/>
+  <img src="https://github.com/aditya3901/aditya3901/blob/main/Locer.png"/>
   <img  width="700" src="https://github.com/aditya3901/aditya3901/blob/main/Locer_2.png"/>
 </p>
 
