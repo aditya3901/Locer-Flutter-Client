@@ -1,6 +1,9 @@
 # locer
 
-A new Flutter project.
+<p align="center">
+  <img src="https://github.com/aditya3901/aditya3901/blob/main/Locer.png"/>
+  <img  width="700" src="https://github.com/aditya3901/aditya3901/blob/main/Locer_2.png"/>
+</p>
 
 ## Getting Started
 
