@@ -120,8 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: _usernameController,
                         decoration: const InputDecoration(
                           labelText: "Username",
-                          labelStyle:
-                              TextStyle(fontWeight: FontWeight.bold),
+                          labelStyle: TextStyle(fontWeight: FontWeight.bold),
                           border: OutlineInputBorder(),
                         ),
                         validator: (value) {
@@ -136,7 +135,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: _emailController,
                         decoration: InputDecoration(
                           labelText: "Email",
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+                          labelStyle:
+                              const TextStyle(fontWeight: FontWeight.bold),
                           border: const OutlineInputBorder(),
                           suffixIcon: TextButton(
                             onPressed: sendOTP,
@@ -229,6 +229,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(color: Colors.black),
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        width: double.infinity,
+                        child: InkWell(
+                          onTap: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/images/gmail.png",
+                                height: 25,
+                              ),
+                              const SizedBox(width: 10),
+                              const Text(
+                                "SignUp with Google",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -244,13 +275,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               "Login",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                                fontSize: 16,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 34),
                     ],
                   ),
                 ),

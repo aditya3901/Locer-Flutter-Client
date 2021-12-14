@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:locer/screens/auth_screens/signup_screen.dart';
 import '../tabs_screen.dart';
 
@@ -10,6 +9,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _secureText = true;
   final formKey = GlobalKey<FormState>();
 
@@ -26,9 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-              "assets/images/auth_bg.jpeg"),
-              fit: BoxFit.cover,
+            image: AssetImage("assets/images/auth_bg.jpeg"),
+            fit: BoxFit.cover,
           ),
         ),
         child: SingleChildScrollView(
@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       TextFormField(
+                        controller: _emailController,
                         decoration: const InputDecoration(
                           labelText: "Email",
                           labelStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -76,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 14),
                       TextFormField(
+                        controller: _passwordController,
                         decoration: InputDecoration(
                           labelText: "Password",
                           labelStyle:
@@ -129,6 +131,37 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(color: Colors.black),
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        width: double.infinity,
+                        child: InkWell(
+                          onTap: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/images/gmail.png",
+                                height: 25,
+                              ),
+                              const SizedBox(width: 10),
+                              const Text(
+                                "Login with Google",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
