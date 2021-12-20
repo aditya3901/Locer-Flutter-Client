@@ -1,9 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:locer/screens/shop_screen.dart';
+import 'package:locer/utils/networking.dart';
+import 'package:locer/utils/store_model.dart';
 
-class StoresList extends StatelessWidget {
+const String url =
+    "https://locerappdemo.herokuapp.com/api/stores/location/841301";
+
+class StoresList extends StatefulWidget {
+  @override
+  State<StoresList> createState() => _StoresListState();
+}
+
+class _StoresListState extends State<StoresList> {
+  List<StoreModel> list = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    NetworkHelper helper = NetworkHelper(url);
+    var data = await helper.getData();
+    if (data != null) {
+      for (var item in data) {
+        var store = StoreModel(
+          item["name"],
+          item["type"],
+          "https://companycontactinformation.com/wp-content/uploads/2020/09/SPENCERS.png",
+        );
+        setState(() {
+          list.add(store);
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     Widget storeItem(String title, String subtitle, String image) {
       return ListTile(
         onTap: () {
@@ -11,7 +47,6 @@ class StoresList extends StatelessWidget {
             ShopScreen.routeName,
             arguments: {
               "title": title,
-              "image": image,
             },
           );
         },
@@ -40,16 +75,13 @@ class StoresList extends StatelessWidget {
       height: 300,
       child: ListView(
         physics: const NeverScrollableScrollPhysics(),
-        children: [
-          storeItem("Spencer's", "All in one supermarket",
-              "https://companycontactinformation.com/wp-content/uploads/2020/09/SPENCERS.png"),
-          storeItem("7-Eleven", "All in one supermarket",
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/7-eleven_logo.svg/2110px-7-eleven_logo.svg.png"),
-          storeItem("Spencer's", "All in one supermarket",
-              "https://companycontactinformation.com/wp-content/uploads/2020/09/SPENCERS.png"),
-          storeItem("7-Eleven", "All in one supermarket",
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/7-eleven_logo.svg/2110px-7-eleven_logo.svg.png"),
-        ],
+        children: list.map((item) {
+          return storeItem(
+            item.title,
+            item.description,
+            item.imageUrl,
+          );
+        }).toList(),
       ),
     );
   }

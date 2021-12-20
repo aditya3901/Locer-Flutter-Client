@@ -166,25 +166,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text("Don't have an account yet? "),
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(SignUpScreen.routeName);
-                            },
-                            child: const Text(
-                              "SignUp",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(SignUpScreen.routeName);
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            style:
+                                Theme.of(context).textTheme.headline1?.copyWith(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                            text: "Don't have an account yet? ",
+                            children: [
+                              TextSpan(
+                                text: "SignUp",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1
+                                    ?.copyWith(fontSize: 15),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                       const SizedBox(height: 34),
                     ],

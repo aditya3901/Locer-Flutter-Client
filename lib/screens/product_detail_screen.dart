@@ -9,6 +9,8 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isFavourite = false;
+  int count = 1;
+  
   @override
   Widget build(BuildContext context) {
     final arg =
@@ -83,26 +85,49 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (count > 0) {
+                        setState(() {
+                          count--;
+                        });
+                      }
+                    },
                     icon: const Icon(Icons.remove),
                   ),
-                  const Text(
-                    "1",
-                    style: TextStyle(
+                  Text(
+                    "$count",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        count++;
+                      });
+                    },
                     icon: const Icon(Icons.add),
                   ),
                 ],
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                if (count > 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text("Item added to cart."),
+                      action: SnackBarAction(
+                        label: "Dismiss",
+                        onPressed:
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar,
+                      ),
+                    ),
+                  );
+                }
+              },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
@@ -129,6 +154,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         onPressed: () {
           setState(() {
             isFavourite = !isFavourite;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: (isFavourite)
+                    ? const Text("Item added to wishlist.")
+                    : const Text("Item removed from wishlist."),
+                action: SnackBarAction(
+                  label: "Dismiss",
+                  onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
+                ),
+              ),
+            );
           });
         },
         child: (isFavourite)

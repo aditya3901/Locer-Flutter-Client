@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:locer/screens/auth_screens/login_screen.dart';
 import 'package:locer/screens/tabs_screen.dart';
-import 'package:email_auth/email_auth.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = "/signup";
@@ -14,65 +13,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _otpController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   bool _secureText = true;
   final formKey = GlobalKey<FormState>();
-  late EmailAuth emailAuth;
-
-  @override
-  void initState() {
-    super.initState();
-    emailAuth = EmailAuth(sessionName: "Test Session");
-  }
 
   void validate() {
     if (formKey.currentState!.validate()) {
-      verifyOTP();
-    }
-  }
-
-  void sendOTP() async {
-    var res = await emailAuth.sendOtp(recipientMail: _emailController.text);
-    if (res) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text("OTP Sent"),
-          action: SnackBarAction(
-            label: "Dismiss",
-            onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
-          ),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text("Unable to send OTP"),
-          action: SnackBarAction(
-            label: "Dismiss",
-            onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
-          ),
-        ),
-      );
-    }
-  }
-
-  void verifyOTP() {
-    var res = emailAuth.validateOtp(
-      recipientMail: _emailController.text,
-      userOtp: _otpController.text,
-    );
-    if (res) {
       Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text("OTP verification failed"),
-          action: SnackBarAction(
-            label: "Dismiss",
-            onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
-          ),
-        ),
-      );
     }
   }
 
@@ -133,20 +81,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(height: 14),
                       TextFormField(
                         controller: _emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Email",
-                          labelStyle:
-                              const TextStyle(fontWeight: FontWeight.bold),
-                          border: const OutlineInputBorder(),
-                          suffixIcon: TextButton(
-                            onPressed: sendOTP,
-                            child: const Text(
-                              "Send OTP",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                          border: OutlineInputBorder(),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -182,6 +120,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             return "Password required";
                           } else if (value.length < 6) {
                             return "Password must of be atleast 6 characters";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 14),
+                      TextFormField(
+                        controller: _phoneController,
+                        decoration: InputDecoration(
+                          labelText: "Phone Number",
+                          labelStyle:
+                              const TextStyle(fontWeight: FontWeight.bold),
+                          border: const OutlineInputBorder(),
+                          suffixIcon: TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              "Send OTP",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Phone Number required";
                           }
                           return null;
                         },
@@ -261,25 +224,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text("Already have an account? "),
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(LoginScreen.routeName);
-                            },
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(LoginScreen.routeName);
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            style:
+                                Theme.of(context).textTheme.headline1?.copyWith(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                            text: "Already have an account? ",
+                            children: [
+                              TextSpan(
+                                text: "Login",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1
+                                    ?.copyWith(fontSize: 15),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
