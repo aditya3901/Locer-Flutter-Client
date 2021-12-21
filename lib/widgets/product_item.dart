@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:locer/screens/product_detail_screen.dart';
+import 'package:locer/utils/child_model.dart';
 
 class ProductItem extends StatefulWidget {
-  Map<String, Object> item;
+  ChildModel item;
   ProductItem(this.item);
 
   @override
@@ -38,7 +39,7 @@ class _ProductItemState extends State<ProductItem> {
                   topRight: Radius.circular(10),
                 ),
                 child: Image.network(
-                  widget.item["image"] as String,
+                  widget.item.imageUrl,
                   height: 112,
                   fit: BoxFit.cover,
                 ),
@@ -47,7 +48,7 @@ class _ProductItemState extends State<ProductItem> {
                 padding:
                     const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 4),
                 child: Text(
-                  "\u20B9${widget.item["price"]}",
+                  "\u20B9${widget.item.price}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -57,7 +58,7 @@ class _ProductItemState extends State<ProductItem> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  widget.item["title"] as String,
+                  widget.item.title,
                   maxLines: 2,
                 ),
               ),

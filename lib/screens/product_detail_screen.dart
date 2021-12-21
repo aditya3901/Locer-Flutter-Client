@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:locer/utils/child_model.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   static const routeName = "/product-detail-screen";
@@ -14,13 +15,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final arg =
-        ModalRoute.of(context)?.settings.arguments as Map<String, Object>;
+        ModalRoute.of(context)?.settings.arguments as ChildModel;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          arg["title"] as String,
+          arg.title,
           style: Theme.of(context).textTheme.headline1,
         ),
         actions: [
@@ -35,7 +36,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.network(
-              arg["image"] as String,
+              arg.imageUrl,
               width: double.infinity,
               height: 320,
               fit: BoxFit.cover,
@@ -43,7 +44,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 14, top: 14),
               child: Text(
-                arg["title"] as String,
+                arg.title,
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
@@ -62,7 +63,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Padding(
               padding: const EdgeInsets.all(14),
               child: Text(
-                "\u20B9${arg["price"]}",
+                "\u20B9${arg.price}",
                 style: const TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,

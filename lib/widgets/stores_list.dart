@@ -30,23 +30,22 @@ class _StoresListState extends State<StoresList> {
           item["type"],
           "https://companycontactinformation.com/wp-content/uploads/2020/09/SPENCERS.png",
         );
-        setState(() {
-          list.add(store);
-        });
+        list.add(store);
       }
+      setState(() {});
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
-    Widget storeItem(String title, String subtitle, String image) {
+    Widget storeItem(String title, String subtitle, String image, int index) {
       return ListTile(
         onTap: () {
           Navigator.of(context).pushNamed(
             ShopScreen.routeName,
             arguments: {
               "title": title,
+              "index": index,
             },
           );
         },
@@ -71,18 +70,29 @@ class _StoresListState extends State<StoresList> {
       );
     }
 
-    return Container(
+    return SizedBox(
       height: 300,
-      child: ListView(
-        physics: const NeverScrollableScrollPhysics(),
-        children: list.map((item) {
-          return storeItem(
-            item.title,
-            item.description,
-            item.imageUrl,
-          );
-        }).toList(),
-      ),
+      child: (list.isEmpty)
+          ? Padding(
+            padding: const EdgeInsets.only(top: 14),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [CircularProgressIndicator()],
+              ),
+          )
+          : ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (ctx, index) {
+                return storeItem(
+                  list[index].title,
+                  list[index].description,
+                  list[index].imageUrl,
+                  index,
+                );
+              },
+              itemCount: list.length,
+            ),
     );
   }
 }
