@@ -29,12 +29,18 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      darkTheme: ThemeData.dark().copyWith(
-        appBarTheme: const AppBarTheme(elevation: 0),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        fontFamily: GoogleFonts.robotoSlab().fontFamily,
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+        ),
         textTheme: const TextTheme(
           headline1: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
       ),
@@ -43,7 +49,6 @@ class MyApp extends StatelessWidget {
         SignUpScreen.routeName: (context) => SignUpScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
         TabsScreen.routeName: (context) => TabsScreen(),
-        ShopScreen.routeName: (context) => ShopScreen(),
         ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
       },
     );

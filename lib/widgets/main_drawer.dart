@@ -25,9 +25,6 @@ class MainDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color(0xFFFAFAFA),
-              ),
               child: Center(
                 child: Image.asset(
                   "assets/images/driver.png",

@@ -41,13 +41,9 @@ class _StoresListState extends State<StoresList> {
     Widget storeItem(String title, String subtitle, String image, int index) {
       return ListTile(
         onTap: () {
-          Navigator.of(context).pushNamed(
-            ShopScreen.routeName,
-            arguments: {
-              "title": title,
-              "index": index,
-            },
-          );
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+            return ShopScreen(title, index);
+          }));
         },
         leading: ClipRRect(
           child: Image.network(
@@ -60,6 +56,7 @@ class _StoresListState extends State<StoresList> {
         ),
         title: Text(
           title,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Text(subtitle),
@@ -74,13 +71,13 @@ class _StoresListState extends State<StoresList> {
       height: 300,
       child: (list.isEmpty)
           ? Padding(
-            padding: const EdgeInsets.only(top: 14),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.only(top: 24),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [CircularProgressIndicator()],
               ),
-          )
+            )
           : ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (ctx, index) {

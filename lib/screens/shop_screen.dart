@@ -8,7 +8,9 @@ const String url =
     "https://locerappdemo.herokuapp.com/api/stores/location/841301";
 
 class ShopScreen extends StatefulWidget {
-  static const routeName = "/shop-screen";
+  String title;
+  int index;
+  ShopScreen(this.title, this.index);
 
   @override
   State<ShopScreen> createState() => _ShopScreenState();
@@ -28,7 +30,7 @@ class _ShopScreenState extends State<ShopScreen> {
     NetworkHelper helper = NetworkHelper(url);
     var stores = await helper.getData();
     if (stores != null) {
-      var store = stores[0];
+      var store = stores[widget.index];
       var products = store["products"];
       for (var product in products) {
         var type = product["type"];
@@ -55,9 +57,6 @@ class _ShopScreenState extends State<ShopScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arg = ModalRoute.of(context)?.settings.arguments as Map;
-    final title = arg["title"];
-    final storeIndex = arg["index"];
 
     Widget shopItem(String catTitle, List<ChildModel> items) {
       return Column(
@@ -78,23 +77,10 @@ class _ShopScreenState extends State<ShopScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
                       wordSpacing: -1,
                     ),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 10,
-                ),
-                child: Text(
-                  "View more >",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -119,7 +105,7 @@ class _ShopScreenState extends State<ShopScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          title,
+          widget.title,
           style: Theme.of(context).textTheme.headline1,
         ),
         actions: [

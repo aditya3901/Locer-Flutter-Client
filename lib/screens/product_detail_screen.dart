@@ -11,11 +11,10 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isFavourite = false;
   int count = 1;
-  
+
   @override
   Widget build(BuildContext context) {
-    final arg =
-        ModalRoute.of(context)?.settings.arguments as ChildModel;
+    final arg = ModalRoute.of(context)?.settings.arguments as ChildModel;
 
     return Scaffold(
       appBar: AppBar(
@@ -46,18 +45,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Text(
                 arg.title,
                 style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 14),
-              child: Text(
-                "Product Description",
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold,
-                ),
               ),
             ),
             Padding(
