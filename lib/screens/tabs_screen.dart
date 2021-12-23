@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:locer/screens/navBar_screens/cart_screen.dart';
-import 'package:locer/screens/navBar_screens/category_screen.dart';
 import 'package:locer/screens/navBar_screens/home_screen.dart';
 import 'package:locer/screens/navBar_screens/wishlist_screen.dart';
 import 'package:locer/widgets/main_drawer.dart';
@@ -15,7 +14,6 @@ class _TabsScreenState extends State<TabsScreen> {
   final List<Widget> _pages = [
     HomeScreen(),
     WishlistScreen(),
-    CategoryScreen(),
     CartScreen(),
   ];
   int _selectedPageIndex = 0;
@@ -60,10 +58,6 @@ class _TabsScreenState extends State<TabsScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: "Wishlist",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: "Category",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),

@@ -25,7 +25,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            },
             icon: const Icon(Icons.shopping_cart_outlined),
           ),
         ],
@@ -34,11 +36,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.network(
-              arg.imageUrl,
-              width: double.infinity,
-              height: 320,
-              fit: BoxFit.cover,
+            Hero(
+              tag: arg.title,
+              child: Image.network(
+                arg.imageUrl,
+                width: double.infinity,
+                height: 320,
+                fit: BoxFit.cover,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 14, top: 14),

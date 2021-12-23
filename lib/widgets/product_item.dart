@@ -38,10 +38,13 @@ class _ProductItemState extends State<ProductItem> {
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                 ),
-                child: Image.network(
-                  widget.item.imageUrl,
-                  height: 112,
-                  fit: BoxFit.cover,
+                child: Hero(
+                  tag: widget.item.title,
+                  child: Image.network(
+                    widget.item.imageUrl,
+                    height: 112,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Padding(
