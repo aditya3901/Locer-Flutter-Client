@@ -67,8 +67,7 @@ class _StoresListState extends State<StoresList> {
       );
     }
 
-    return SizedBox(
-      height: 300,
+    return Container(
       child: (list.isEmpty)
           ? Padding(
               padding: const EdgeInsets.only(top: 24),
@@ -79,6 +78,7 @@ class _StoresListState extends State<StoresList> {
               ),
             )
           : ListView.builder(
+              shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (ctx, index) {
                 return storeItem(

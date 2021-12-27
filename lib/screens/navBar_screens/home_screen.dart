@@ -23,17 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListView(
       children: [
         // Welcome User
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 4, bottom: 8),
-              child: Text(
-                "Hi, Raushan!",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(top: 4, bottom: 8),
+          child: Text(
+            "Hi, Raushan!",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline1,
+          ),
         ),
         // Categories
         CategoryRow(),
