@@ -34,11 +34,13 @@ class _ShopScreenState extends State<ShopScreen> {
       var products = store["products"];
       for (var product in products) {
         var type = product["type"];
+        var id = product["_id"];
         var title = product["title"];
+        var desc = product["description"];
         var price = product["price"];
         var imgUrl =
             "https://images-gmi-pmc.edge-generalmills.com/087d17eb-500e-4b26-abd1-4f9ffa96a2c6.jpg";
-        var item = ChildModel(title, price, imgUrl);
+        var item = ChildModel(id, title, desc, price, imgUrl);
         if (map.containsKey(type)) {
           map[type]?.add(item);
         } else {

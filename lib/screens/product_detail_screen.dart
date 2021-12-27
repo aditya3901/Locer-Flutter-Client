@@ -37,7 +37,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Hero(
-              tag: arg.title,
+              tag: arg.id,
               child: Image.network(
                 arg.imageUrl,
                 width: double.infinity,
@@ -46,10 +46,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 14, top: 14),
+              padding: const EdgeInsets.only(
+                left: 14,
+                top: 14,
+                right: 14,
+              ),
               child: Text(
                 arg.title,
                 style: Theme.of(context).textTheme.headline1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 14,
+              ),
+              child: Text(
+                arg.description,
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
               ),
             ),
             Padding(

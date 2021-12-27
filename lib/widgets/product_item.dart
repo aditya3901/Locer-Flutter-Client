@@ -39,7 +39,7 @@ class _ProductItemState extends State<ProductItem> {
                   topRight: Radius.circular(10),
                 ),
                 child: Hero(
-                  tag: widget.item.title,
+                  tag: widget.item.id,
                   child: Image.network(
                     widget.item.imageUrl,
                     height: 112,
