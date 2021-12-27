@@ -119,7 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (value!.isEmpty) {
                             return "Password required";
                           } else if (value.length < 6) {
-                            return "Password must of be atleast 6 characters";
+                            return "Password must be of atleast 6 characters";
                           }
                           return null;
                         },

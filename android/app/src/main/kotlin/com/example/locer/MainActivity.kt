@@ -1,4 +1,4 @@
-package com.example.locer
+package com.locer.locer
 
 import io.flutter.embedding.android.FlutterActivity
 

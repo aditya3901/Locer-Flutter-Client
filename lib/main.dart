@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:locer/screens/auth_screens/login_screen.dart';
 import 'package:locer/screens/auth_screens/signup_screen.dart';
 import 'package:locer/screens/product_detail_screen.dart';
-import 'package:locer/screens/shop_screen.dart';
 import 'package:locer/screens/tabs_screen.dart';
 
 void main() => runApp(MyApp());

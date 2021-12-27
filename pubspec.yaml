@@ -38,14 +38,10 @@ dependencies:
   smooth_page_indicator: ^0.3.0-nullsafety.0
   google_fonts: ^2.1.0
   http: ^0.13.4
-  hive: ^2.0.4
-  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  hive_generator: ^1.1.1
-  build_runner: ^2.1.5
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
