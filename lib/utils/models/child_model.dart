@@ -1,4 +1,4 @@
-const String tableProducts = 'products';
+const String tableWishlist = 'wishlist';
 
 class ProductFields {
   static const List<String> values = [

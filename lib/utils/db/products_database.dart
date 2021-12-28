@@ -30,7 +30,7 @@ class ProductsDatabase {
     const boolType = "BOOLEAN";
 
     await db.execute('''
-    CREATE TABLE $tableProducts (
+    CREATE TABLE $tableWishlist (
       ${ProductFields.id} $idType,
       ${ProductFields.title} $textType,
       ${ProductFields.description} $textType,
@@ -43,12 +43,12 @@ class ProductsDatabase {
 
   Future create(ChildModel item) async {
     final db = await instance.database;
-    await db.insert(tableProducts, item.toJson());
+    await db.insert(tableWishlist, item.toJson());
   }
 
   Future<List<ChildModel>> readAll() async {
     final db = await instance.database;
-    final result = await db.query(tableProducts);
+    final result = await db.query(tableWishlist);
 
     if (result.isNotEmpty) {
       return result.map((json) => ChildModel.fromJson(json)).toList();
@@ -60,7 +60,7 @@ class ProductsDatabase {
   Future<ChildModel?> readProduct(String id) async {
     final db = await instance.database;
     final maps = await db.query(
-      tableProducts,
+      tableWishlist,
       columns: ProductFields.values,
       where: '${ProductFields.id} = ?',
       whereArgs: [id],
@@ -76,7 +76,7 @@ class ProductsDatabase {
   Future delete(String id) async {
     final db = await instance.database;
     await db.delete(
-      tableProducts,
+      tableWishlist,
       where: '${ProductFields.id} = ?',
       whereArgs: [id],
     );
