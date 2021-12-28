@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:locer/screens/shop_screen.dart';
 import 'package:locer/utils/networking.dart';
-import 'package:locer/utils/store_model.dart';
+import 'package:locer/utils/models/store_model.dart';
 
 const String url =
     "https://locerappdemo.herokuapp.com/api/stores/location/841301";
@@ -32,7 +32,9 @@ class _StoresListState extends State<StoresList> {
         );
         list.add(store);
       }
-      setState(() {});
+      if(mounted) {
+        setState(() {});
+      }
     }
   }
 

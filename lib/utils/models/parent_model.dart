@@ -1,4 +1,4 @@
-import 'package:locer/utils/child_model.dart';
+import 'package:locer/utils/models/child_model.dart';
 
 class ParentModel {
   String categoryTitle;

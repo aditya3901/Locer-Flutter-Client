@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:locer/screens/product_detail_screen.dart';
-import 'package:locer/utils/child_model.dart';
+import 'package:locer/utils/models/child_model.dart';
 
 class ProductItem extends StatefulWidget {
   ChildModel item;
@@ -25,10 +25,9 @@ class _ProductItemState extends State<ProductItem> {
         elevation: 4,
         child: InkWell(
           onTap: () {
-            Navigator.of(context).pushNamed(
-              ProductDetailScreen.routeName,
-              arguments: widget.item,
-            );
+            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+              return ProductDetailScreen(widget.item);
+            }));
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

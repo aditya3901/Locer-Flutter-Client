@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:locer/utils/child_model.dart';
+import 'package:locer/utils/db/products_database.dart';
+import 'package:locer/utils/models/child_model.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  static const routeName = "/product-detail-screen";
+  ChildModel productItem;
+  ProductDetailScreen(this.productItem);
 
   @override
   _ProductDetailScreenState createState() => _ProductDetailScreenState();
@@ -13,14 +15,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int count = 1;
 
   @override
-  Widget build(BuildContext context) {
-    final arg = ModalRoute.of(context)?.settings.arguments as ChildModel;
+  void initState() {
+    super.initState();
+    _getData();
+  }
 
+  void _getData() async {
+    ChildModel? item =
+        await ProductsDatabase.instance.readProduct(widget.productItem.id);
+    if (item != null) {
+      setState(() {
+        isFavourite = item.isFavourite;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          arg.title,
+          widget.productItem.title,
           style: Theme.of(context).textTheme.headline1,
         ),
         actions: [
@@ -37,9 +53,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Hero(
-              tag: arg.id,
+              tag: widget.productItem.id,
               child: Image.network(
-                arg.imageUrl,
+                widget.productItem.imageUrl,
                 width: double.infinity,
                 height: 320,
                 fit: BoxFit.cover,
@@ -52,7 +68,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 right: 14,
               ),
               child: Text(
-                arg.title,
+                widget.productItem.title,
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
@@ -61,16 +77,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 left: 14,
               ),
               child: Text(
-                arg.description,
+                widget.productItem.description,
                 style: const TextStyle(
                   fontSize: 16,
+                  color: Colors.black54,
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(14),
               child: Text(
-                "\u20B9${arg.price}",
+                "\u20B9${widget.productItem.price}",
                 style: const TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
@@ -159,9 +176,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
+          if (isFavourite == false) {
+            isFavourite = true;
+            final item = ChildModel(
+              widget.productItem.id,
+              widget.productItem.title,
+              widget.productItem.description,
+              widget.productItem.price,
+              widget.productItem.imageUrl,
+              isFavourite,
+            );
+            await ProductsDatabase.instance.create(item);
+          } else if (isFavourite == true) {
+            isFavourite = false;
+            await ProductsDatabase.instance.delete(widget.productItem.id);
+          }
           setState(() {
-            isFavourite = !isFavourite;
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: (isFavourite)

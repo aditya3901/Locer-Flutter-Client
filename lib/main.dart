@@ -5,7 +5,10 @@ import 'package:locer/screens/auth_screens/signup_screen.dart';
 import 'package:locer/screens/product_detail_screen.dart';
 import 'package:locer/screens/tabs_screen.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -43,12 +46,11 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: LoginScreen(),
+      home: TabsScreen(),
       routes: {
         SignUpScreen.routeName: (context) => SignUpScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
         TabsScreen.routeName: (context) => TabsScreen(),
-        ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
       },
     );
   }

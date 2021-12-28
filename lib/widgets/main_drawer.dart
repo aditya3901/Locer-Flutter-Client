@@ -10,10 +10,6 @@ class MainDrawer extends StatelessWidget {
         },
         title: Text(
           title,
-          style: const TextStyle(
-            // fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
         ),
         leading: Icon(icon),
       );
@@ -33,8 +29,9 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            drawerItem("Your Orders", Icons.home),
-            drawerItem("Recipes", Icons.favorite),
+            drawerItem("Grocery & Pantry", Icons.home),
+            drawerItem("Restaurants & Hotels", Icons.hotel),
+            drawerItem("Your Orders", Icons.restaurant),
             drawerItem("Locer Express", Icons.track_changes),
             const Divider(thickness: 1),
             const Padding(

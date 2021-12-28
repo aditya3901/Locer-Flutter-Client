@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:locer/utils/child_model.dart';
+import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/utils/networking.dart';
-import 'package:locer/utils/parent_model.dart';
+import 'package:locer/utils/models/parent_model.dart';
 import 'package:locer/widgets/product_item.dart';
 
 const String url =
@@ -40,7 +40,7 @@ class _ShopScreenState extends State<ShopScreen> {
         var price = product["price"];
         var imgUrl =
             "https://images-gmi-pmc.edge-generalmills.com/087d17eb-500e-4b26-abd1-4f9ffa96a2c6.jpg";
-        var item = ChildModel(id, title, desc, price, imgUrl);
+        var item = ChildModel(id, title, desc, price, imgUrl, false);
         if (map.containsKey(type)) {
           map[type]?.add(item);
         } else {
