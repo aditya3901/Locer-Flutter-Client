@@ -38,59 +38,65 @@ class _WishlistScreenState extends State<WishlistScreen> {
           })).then((_) => refreshProducts());
         },
         child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black12),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ClipRRect(
-                child: Hero(
-                  tag: item.id,
-                  child: FadeInImage(
-                    placeholder: const AssetImage("assets/images/driver.png"),
-                    image: NetworkImage(item.imageUrl),
-                    fit: BoxFit.contain,
-                    height: 80,
-                    width: 80,
-                  ),
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 14.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.title,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16),
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black12, width: 0.8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    child: Hero(
+                      tag: item.id,
+                      child: FadeInImage(
+                        placeholder:
+                            const AssetImage("assets/images/driver.png"),
+                        image: NetworkImage(item.imageUrl),
+                        fit: BoxFit.contain,
+                        height: 80,
+                        width: 80,
                       ),
-                      Text(
-                        "\u20B9${item.price}",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
+                    ),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 14.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.title,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            "\u20B9${item.price}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.favorite,
-                  color: Colors.green,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       );

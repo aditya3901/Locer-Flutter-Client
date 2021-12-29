@@ -24,6 +24,8 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
+  bool dark_mode = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +37,14 @@ class _TabsScreenState extends State<TabsScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_cart_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
+            onPressed: () {
+              setState(() {
+                dark_mode = !dark_mode;
+              });
+            },
+            icon: (dark_mode == true)
+                ? const Icon(Icons.light_mode)
+                : const Icon(Icons.dark_mode),
           ),
         ],
       ),

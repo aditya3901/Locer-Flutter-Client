@@ -29,75 +29,80 @@ class _CartScreenState extends State<CartScreen> {
 
   Widget cartItem(CartItem item) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black12),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ClipRRect(
-            child: FadeInImage(
-              placeholder: const AssetImage("assets/images/driver.png"),
-              image: NetworkImage(item.imageUrl),
-              fit: BoxFit.contain,
-              height: 80,
-              width: 80,
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 14.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.title,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    "\u20B9${item.price}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: Colors.black12, width: 0.8),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipRRect(
+                child: FadeInImage(
+                  placeholder: const AssetImage("assets/images/driver.png"),
+                  image: NetworkImage(item.imageUrl),
+                  fit: BoxFit.contain,
+                  height: 80,
+                  width: 80,
+                ),
+                borderRadius: BorderRadius.circular(8),
               ),
-            ),
-          ),
-          Card(
-            elevation: 2,
-            child: Center(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                child: Text(
-                  "${item.count}",
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 14.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      Text(
+                        "\u20B9${item.price}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
+              Card(
+                elevation: 2,
+                child: Center(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    child: Text(
+                      "${item.count}",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () async {
+                  await ProductsDatabase.instance.deleteCartItem(item.id);
+                  refreshCart();
+                },
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.redAccent,
+                ),
+              ),
+            ],
           ),
-          IconButton(
-            onPressed: () async {
-              await ProductsDatabase.instance.deleteCartItem(item.id);
-              refreshCart();
-            },
-            icon: const Icon(
-              Icons.delete,
-              color: Colors.redAccent,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

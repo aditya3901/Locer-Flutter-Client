@@ -216,19 +216,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             isFavourite = false;
             await ProductsDatabase.instance.delete(widget.productItem.id);
           }
-          setState(() {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: (isFavourite)
-                    ? const Text("Item added to wishlist.")
-                    : const Text("Item removed from wishlist."),
-                action: SnackBarAction(
-                  label: "Dismiss",
-                  onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
-                ),
-              ),
-            );
-          });
+          setState(() {});
         },
         child: (isFavourite)
             ? const Icon(Icons.favorite)
