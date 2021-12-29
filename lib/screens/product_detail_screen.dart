@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:locer/utils/db/products_database.dart';
+import 'package:locer/utils/models/cart_item_model.dart';
 import 'package:locer/utils/models/child_model.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -58,7 +59,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 widget.productItem.imageUrl,
                 width: double.infinity,
                 height: 320,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
             ),
             Padding(
@@ -111,7 +112,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      if (count > 0) {
+                      if (count > 1) {
                         setState(() {
                           count--;
                         });
@@ -139,11 +140,34 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             InkWell(
-              onTap: () {
-                if (count > 0) {
+              onTap: () async {
+                final cartItem = CartItem(
+                  widget.productItem.id,
+                  widget.productItem.title,
+                  widget.productItem.price * count,
+                  widget.productItem.imageUrl,
+                  count,
+                );
+                CartItem? item =
+                    await ProductsDatabase.instance.readCart(cartItem.id);
+                // Add to table if doesn't exist in cart
+                if (item == null) {
+                  await ProductsDatabase.instance.createCart(cartItem);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: const Text("Item added to cart."),
+                      action: SnackBarAction(
+                        label: "Dismiss",
+                        onPressed:
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar,
+                      ),
+                    ),
+                  );
+                } else {
+                  // Show SnackBar if already exist in cart
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text("Already exist in cart."),
                       action: SnackBarAction(
                         label: "Dismiss",
                         onPressed:

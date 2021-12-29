@@ -38,21 +38,27 @@ class _WishlistScreenState extends State<WishlistScreen> {
           })).then((_) => refreshProducts());
         },
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black12),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipRRect(
                 child: Hero(
                   tag: item.id,
-                  child: Image.network(
-                    item.imageUrl,
-                    width: 80,
+                  child: FadeInImage(
+                    placeholder: const AssetImage("assets/images/driver.png"),
+                    image: NetworkImage(item.imageUrl),
+                    fit: BoxFit.contain,
                     height: 80,
-                    fit: BoxFit.cover,
+                    width: 80,
                   ),
                 ),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(8),
               ),
               Expanded(
                 child: Padding(
@@ -100,7 +106,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 14.0,
-                      bottom: 10,
+                      bottom: 20,
                     ),
                     child: Text(
                       "Your Favourites",

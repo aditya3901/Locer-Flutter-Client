@@ -37,18 +37,22 @@ class _ProductItemState extends State<ProductItem> {
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                 ),
-                child: Hero(
-                  tag: widget.item.id,
-                  child: Image.network(
-                    widget.item.imageUrl,
-                    height: 112,
-                    fit: BoxFit.cover,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4, left: 6, right: 6),
+                  child: Hero(
+                    tag: widget.item.id,
+                    child: FadeInImage(
+                      placeholder: const AssetImage("assets/images/driver.png"), 
+                      image: NetworkImage(widget.item.imageUrl),
+                      fit: BoxFit.contain,
+                      height: 112,
+                    ),
                   ),
                 ),
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 4),
+                    const EdgeInsets.only(top: 4, left: 8, right: 8, bottom: 4),
                 child: Text(
                   "\u20B9${widget.item.price}",
                   style: const TextStyle(

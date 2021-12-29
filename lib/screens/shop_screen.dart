@@ -38,8 +38,7 @@ class _ShopScreenState extends State<ShopScreen> {
         var title = product["title"];
         var desc = product["description"];
         var price = product["price"];
-        var imgUrl =
-            "https://images-gmi-pmc.edge-generalmills.com/087d17eb-500e-4b26-abd1-4f9ffa96a2c6.jpg";
+        var imgUrl = "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
         var item = ChildModel(id, title, desc, price, imgUrl, false);
         if (map.containsKey(type)) {
           map[type]?.add(item);
