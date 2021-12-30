@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:locer/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-class MainDrawer extends StatefulWidget {
-  @override
-  State<MainDrawer> createState() => _MainDrawerState();
-}
-
-class _MainDrawerState extends State<MainDrawer> {
+class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);

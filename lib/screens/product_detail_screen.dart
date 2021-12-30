@@ -81,7 +81,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 widget.productItem.description,
                 style: const TextStyle(
                   fontSize: 16,
-                  color: Colors.black54,
                 ),
               ),
             ),

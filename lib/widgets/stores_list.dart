@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:locer/screens/shop_screen.dart';
 import 'package:locer/utils/networking.dart';
 import 'package:locer/utils/models/store_model.dart';
-
-const String url =
-    "https://locerappdemo.herokuapp.com/api/stores/location/841301";
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StoresList extends StatefulWidget {
   @override
@@ -21,6 +19,9 @@ class _StoresListState extends State<StoresList> {
   }
 
   void getData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final pin = prefs.getString("location_pin") ?? "841301";
+    String url = "https://locerappdemo.herokuapp.com/api/stores/location/$pin";
     NetworkHelper helper = NetworkHelper(url);
     var data = await helper.getData();
     if (data != null) {
@@ -32,7 +33,20 @@ class _StoresListState extends State<StoresList> {
         );
         list.add(store);
       }
-      if(mounted) {
+      // If no stores are present at given PINCODE
+      if (list.isEmpty) {
+        list.add(StoreModel("NA", "NA", "NA"));
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    }
+    // If response from API is not valid
+    else {
+      if (list.isEmpty) {
+        list.add(StoreModel("NA", "NA", "NA"));
+      }
+      if (mounted) {
         setState(() {});
       }
     }
@@ -79,19 +93,27 @@ class _StoresListState extends State<StoresList> {
                 children: const [CircularProgressIndicator()],
               ),
             )
-          : ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (ctx, index) {
-                return storeItem(
-                  list[index].title,
-                  list[index].description,
-                  list[index].imageUrl,
-                  index,
-                );
-              },
-              itemCount: list.length,
-            ),
+          : (list[0].title == "NA")
+              ? const Padding(
+                  padding: EdgeInsets.all(24),
+                  child: Text(
+                    "We regret inform you that we are not yet operating at your location. We are currently operating at Chhapra, Bihar(841301) Hopefully we will see you soon.",
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (ctx, index) {
+                    return storeItem(
+                      list[index].title,
+                      list[index].description,
+                      list[index].imageUrl,
+                      index,
+                    );
+                  },
+                  itemCount: list.length,
+                ),
     );
   }
 }
