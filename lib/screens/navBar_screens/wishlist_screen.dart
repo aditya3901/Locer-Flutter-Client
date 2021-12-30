@@ -80,7 +80,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             "\u20B9${item.price}",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                           ),
                         ],

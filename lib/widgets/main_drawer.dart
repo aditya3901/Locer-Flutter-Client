@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends StatefulWidget {
+  @override
+  State<MainDrawer> createState() => _MainDrawerState();
+}
+
+class _MainDrawerState extends State<MainDrawer> {
+  bool isDark = false;
   @override
   Widget build(BuildContext context) {
     Widget drawerItem(String title, IconData icon) {
@@ -10,6 +16,9 @@ class MainDrawer extends StatelessWidget {
         },
         title: Text(
           title,
+          style: const TextStyle(
+            fontSize: 16,
+          ),
         ),
         leading: Icon(icon),
       );
@@ -38,17 +47,31 @@ class MainDrawer extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(
                 "Settings & Privacy",
-                // style: TextStyle(fontSize: 16),
               ),
             ),
             drawerItem("Settings", Icons.settings),
             drawerItem("Help Center", Icons.help),
+            ListTile(
+              title: const Text(
+                "Dark Mode",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              leading: const Icon(Icons.dark_mode),
+              trailing: Switch(
+                  value: isDark,
+                  onChanged: (val) {
+                    setState(() {
+                      isDark = val;
+                    });
+                  }),
+            ),
             const Divider(thickness: 1),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(
                 "Communication",
-                // style: TextStyle(fontSize: 16),
               ),
             ),
             drawerItem("Rate Us", Icons.star),

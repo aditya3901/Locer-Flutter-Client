@@ -67,7 +67,7 @@ class _CartScreenState extends State<CartScreen> {
                         "\u20B9${item.price}",
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 16,
                         ),
                       ),
                     ],
