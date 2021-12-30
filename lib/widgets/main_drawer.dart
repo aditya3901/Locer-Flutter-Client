@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:locer/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class MainDrawer extends StatefulWidget {
   @override
@@ -6,9 +8,10 @@ class MainDrawer extends StatefulWidget {
 }
 
 class _MainDrawerState extends State<MainDrawer> {
-  bool isDark = false;
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     Widget drawerItem(String title, IconData icon) {
       return ListTile(
         onTap: () {
@@ -59,13 +62,14 @@ class _MainDrawerState extends State<MainDrawer> {
                 ),
               ),
               leading: const Icon(Icons.dark_mode),
-              trailing: Switch(
-                  value: isDark,
-                  onChanged: (val) {
-                    setState(() {
-                      isDark = val;
-                    });
-                  }),
+              trailing: Switch.adaptive(
+                value: themeProvider.isDarkMode,
+                onChanged: (value) {
+                  final provider =
+                      Provider.of<ThemeProvider>(context, listen: false);
+                  provider.toggleTheme(value);
+                },
+              ),
             ),
             const Divider(thickness: 1),
             const Padding(
