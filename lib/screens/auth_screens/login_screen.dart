@@ -16,20 +16,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  @override
-  void initState() {
-    super.initState();
-    checkUser();
-  }
-
-  void checkUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    final json = prefs.getString("current_user");
-    if (json != null) {
-      Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
-    }
-  }
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 

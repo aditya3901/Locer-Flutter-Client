@@ -29,7 +29,7 @@ class _StoresListState extends State<StoresList> {
         var store = StoreModel(
           item["name"],
           item["type"],
-          "https://companycontactinformation.com/wp-content/uploads/2020/09/SPENCERS.png",
+          "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${item["filename"]}",
         );
         list.add(store);
       }
@@ -61,14 +61,23 @@ class _StoresListState extends State<StoresList> {
             return ShopScreen(title, index);
           }));
         },
-        leading: ClipRRect(
-          child: Image.network(
-            image,
-            width: 52,
-            height: 52,
-            fit: BoxFit.cover,
+        leading: Card(
+          elevation: 3,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: ClipRRect(
+            child: FadeInImage(
+              fit: BoxFit.cover,
+              width: 58,
+              imageErrorBuilder: (context, error, stackTrace) => Image.network(
+                list[0].imageUrl,
+                width: 58,
+                fit: BoxFit.cover,
+              ),
+              placeholder: NetworkImage(list[0].imageUrl),
+              image: NetworkImage(image),
+            ),
+            borderRadius: BorderRadius.circular(8),
           ),
-          borderRadius: BorderRadius.circular(10),
         ),
         title: Text(
           title,

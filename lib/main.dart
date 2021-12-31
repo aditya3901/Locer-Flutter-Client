@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/auth_screens/login_screen.dart';
 import 'package:locer/screens/auth_screens/signup_screen.dart';
+import 'package:locer/screens/splash_screen.dart';
 import 'package:locer/screens/tabs_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
             themeMode: themeProvider.themeMode,
             theme: MyTheme.lightTheme,
             darkTheme: MyTheme.darkTheme,
-            home: LoginScreen(),
+            home: SplashScreen(),
             routes: {
               SignUpScreen.routeName: (context) => SignUpScreen(),
               LoginScreen.routeName: (context) => LoginScreen(),
