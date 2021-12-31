@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
             themeMode: themeProvider.themeMode,
             theme: MyTheme.lightTheme,
             darkTheme: MyTheme.darkTheme,
-            home: TabsScreen(),
+            home: LoginScreen(),
             routes: {
               SignUpScreen.routeName: (context) => SignUpScreen(),
               LoginScreen.routeName: (context) => LoginScreen(),

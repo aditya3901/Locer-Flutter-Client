@@ -56,6 +56,7 @@ class ProductsDatabase {
     final db = await instance.database;
     await db.insert(tableWishlist, item.toJson());
   }
+
   Future createCart(CartItem item) async {
     final db = await instance.database;
     await db.insert(tableCart, item.toJson());
@@ -71,6 +72,7 @@ class ProductsDatabase {
       return [];
     }
   }
+
   Future<List<CartItem>> readAllCartItems() async {
     final db = await instance.database;
     final result = await db.query(tableCart);
@@ -97,6 +99,7 @@ class ProductsDatabase {
       return null;
     }
   }
+
   Future<CartItem?> readCart(String id) async {
     final db = await instance.database;
     final maps = await db.query(
@@ -121,6 +124,7 @@ class ProductsDatabase {
       whereArgs: [id],
     );
   }
+
   Future deleteCartItem(String id) async {
     final db = await instance.database;
     await db.delete(
@@ -128,6 +132,16 @@ class ProductsDatabase {
       where: '${CartFields.id} = ?',
       whereArgs: [id],
     );
+  }
+
+  Future clearWishlistTable() async {
+    final db = await instance.database;
+    await db.execute("DELETE FROM $tableWishlist");
+  }
+
+  Future clearCartTable() async {
+    final db = await instance.database;
+    await db.execute("DELETE FROM $tableCart");
   }
 
   Future close() async {

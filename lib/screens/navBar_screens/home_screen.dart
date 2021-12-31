@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:locer/screens/auth_screens/login_screen.dart';
+import 'package:locer/utils/models/user_model.dart';
 import 'package:locer/widgets/category_row.dart';
 import 'package:locer/widgets/stores_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String username = "";
   int activeIndex = 0;
   final urlImages = [
     "https://pbs.twimg.com/media/DfFB1BOUcAAR1op.png",
@@ -19,6 +24,24 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
+
+  void getUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final json = prefs.getString("current_user");
+    if (json != null) {
+      Map<String, dynamic> map = jsonDecode(json);
+      final user = User.fromJson(map);
+      setState(() {
+        username = user.name!;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
@@ -26,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Padding(
           padding: const EdgeInsets.only(top: 4, bottom: 8),
           child: Text(
-            "Hi, Raushan!",
+            "Hi, $username!",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline1,
           ),
