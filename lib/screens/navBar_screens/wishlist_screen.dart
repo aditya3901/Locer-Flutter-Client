@@ -132,8 +132,22 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   ),
                 ],
               )
-        : const Center(
-            child: Text("No product added to wishlist!"),
+        : Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/images/empty_wishlist.png",
+                  width: double.infinity,
+                  height: 300,
+                ),
+                const SizedBox(height: 30),
+                const Text(
+                  "Your wishlist is empty!",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           );
   }
 }

@@ -57,13 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           );
         } else {
           final prefs = await SharedPreferences.getInstance();
-          final currentUser = User(
-            id: jsonData["_id"],
-            name: jsonData["name"],
-            email: jsonData["email"],
-            token: jsonData["token"],
-          );
-          String json = jsonEncode(currentUser);
+          String json = jsonEncode(jsonData); // Convert Json to String
           prefs.setString("current_user", json);
           setState(() {
             _showSpinner = false;

@@ -11,15 +11,6 @@ class User {
     required this.token,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "_id": id,
-      "name": name,
-      "email": email,
-      "token": token,
-    };
-  }
-
   User.fromJson(Map<String, dynamic> json) {
     id = json["_id"];
     name = json["name"];

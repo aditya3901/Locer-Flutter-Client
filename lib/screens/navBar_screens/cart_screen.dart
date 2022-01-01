@@ -145,8 +145,20 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ],
               )
-        : const Center(
-            child: Text("Add something to cart first."),
+        : Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/images/empty_cart.png",
+                  width: double.infinity,
+                ),
+                const Text(
+                  "Your cart is empty!",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           );
   }
 }
