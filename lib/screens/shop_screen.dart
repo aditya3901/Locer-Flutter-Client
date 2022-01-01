@@ -3,9 +3,7 @@ import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/utils/networking.dart';
 import 'package:locer/utils/models/parent_model.dart';
 import 'package:locer/widgets/product_item.dart';
-
-const String url =
-    "https://locerappdemo.herokuapp.com/api/stores/location/841301";
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ShopScreen extends StatefulWidget {
   String title;
@@ -17,6 +15,7 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
+  String storeID = "";
   List<ParentModel> categoryItems = [];
   Map<String, List<ChildModel>> map = {};
 
@@ -27,10 +26,14 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   void getShopData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final pin = prefs.getString("location_pin") ?? "841301";
+    String url = "https://locerappdemo.herokuapp.com/api/stores/location/$pin";
     NetworkHelper helper = NetworkHelper(url);
     var stores = await helper.getData();
     if (stores != null) {
       var store = stores[widget.index];
+      storeID = store["_id"];
       var products = store["products"];
       for (var product in products) {
         var type = product["type"];
@@ -38,8 +41,9 @@ class _ShopScreenState extends State<ShopScreen> {
         var title = product["title"];
         var desc = product["description"];
         var price = product["price"];
-        var imgUrl = "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
-        var item = ChildModel(id, title, desc, price, imgUrl, false);
+        var imgUrl =
+            "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
+        var item = ChildModel(id, title, desc, price, imgUrl, false, storeID);
         if (map.containsKey(type)) {
           map[type]?.add(item);
         } else {
@@ -58,7 +62,6 @@ class _ShopScreenState extends State<ShopScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     Widget shopItem(String catTitle, List<ChildModel> items) {
       return Column(
         children: [

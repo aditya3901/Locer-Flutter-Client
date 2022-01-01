@@ -2,7 +2,13 @@ const String tableWishlist = 'wishlist';
 
 class ProductFields {
   static const List<String> values = [
-    id, title, description, price, imageUrl, isFavourite,
+    id,
+    title,
+    description,
+    price,
+    imageUrl,
+    isFavourite,
+    storeID
   ];
 
   static const String id = '_id';
@@ -11,6 +17,7 @@ class ProductFields {
   static const String price = 'price';
   static const String imageUrl = 'imageUrl';
   static const String isFavourite = 'isFavourite';
+  static const String storeID = "storeID";
 }
 
 class ChildModel {
@@ -20,6 +27,7 @@ class ChildModel {
   int price;
   String imageUrl;
   bool isFavourite;
+  String storeID;
 
   ChildModel(
     this.id,
@@ -28,6 +36,7 @@ class ChildModel {
     this.price,
     this.imageUrl,
     this.isFavourite,
+    this.storeID,
   );
 
   Map<String, Object?> toJson() => {
@@ -37,6 +46,7 @@ class ChildModel {
         ProductFields.price: price,
         ProductFields.imageUrl: imageUrl,
         ProductFields.isFavourite: isFavourite ? 1 : 0,
+        ProductFields.storeID: storeID,
       };
 
   static ChildModel fromJson(Map<String, Object?> json) => ChildModel(
@@ -46,5 +56,6 @@ class ChildModel {
         json[ProductFields.price] as int,
         json[ProductFields.imageUrl] as String,
         json[ProductFields.isFavourite] == 1,
+        json[ProductFields.storeID] as String,
       );
 }

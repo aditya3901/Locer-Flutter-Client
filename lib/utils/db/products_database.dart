@@ -37,7 +37,8 @@ class ProductsDatabase {
       ${ProductFields.description} $textType,
       ${ProductFields.price} $priceType,
       ${ProductFields.imageUrl} $textType,
-      ${ProductFields.isFavourite} $boolType
+      ${ProductFields.isFavourite} $boolType,
+      ${ProductFields.storeID} $textType
     )
     ''');
 
@@ -47,7 +48,10 @@ class ProductsDatabase {
       ${CartFields.title} $textType,
       ${CartFields.price} $priceType,
       ${CartFields.imageUrl} $textType,
-      ${CartFields.count} $priceType
+      ${CartFields.count} $priceType,
+      ${CartFields.countInStock} $priceType,
+      ${CartFields.storeID} $textType,
+      ${CartFields.storeName} $textType
     )
     ''');
   }
