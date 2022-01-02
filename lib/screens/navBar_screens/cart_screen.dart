@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:locer/screens/checkout_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
 import 'package:locer/utils/models/cart_item_model.dart';
 
@@ -125,20 +126,28 @@ class _CartScreenState extends State<CartScreen> {
                       itemCount: _cart.length,
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.green,
-                    ),
-                    margin: const EdgeInsets.all(12),
-                    child: const Center(
-                      child: Text(
-                        "Confirm Order",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (ctx) {
+                        return CheckoutScreen(_cart);
+                      }));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.green,
+                      ),
+                      margin: const EdgeInsets.all(12),
+                      child: const Center(
+                        child: Text(
+                          "Proceed to Checkout",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
