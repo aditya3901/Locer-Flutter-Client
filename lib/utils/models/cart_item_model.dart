@@ -12,13 +12,13 @@ class CartFields {
     storeName,
   ];
 
-  static const String id = '_id';
+  static const String id = 'id';
   static const String title = 'title';
   static const String price = 'price';
-  static const String imageUrl = 'imageUrl';
-  static const String count = 'count';
+  static const String imageUrl = 'filename';
+  static const String count = 'qty';
   static const String countInStock = 'countInStock';
-  static const String storeID = "storeID";
+  static const String storeID = "storeId";
   static const String storeName = "storeName";
 }
 
