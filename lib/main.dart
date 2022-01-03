@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/auth_screens/login_screen.dart';
 import 'package:locer/screens/auth_screens/signup_screen.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(Phoenix(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

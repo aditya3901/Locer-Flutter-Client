@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/auth_screens/login_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
@@ -132,10 +133,7 @@ class MainDrawer extends StatelessWidget {
                 prefs.clear();
                 await ProductsDatabase.instance.clearWishlistTable();
                 await ProductsDatabase.instance.clearCartTable();
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  LoginScreen.routeName,
-                  (Route route) => false,
-                );
+                Phoenix.rebirth(context);
               },
             ),
           ],

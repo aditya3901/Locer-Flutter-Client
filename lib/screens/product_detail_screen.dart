@@ -139,14 +139,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           widget.productItem.title,
           style: Theme.of(context).textTheme.headline1,
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            },
-            icon: const Icon(Icons.shopping_cart_outlined),
-          ),
-        ],
       ),
       body: ModalProgressHUD(
         inAsyncCall: addingToCart,

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:locer/screens/navBar_screens/cart_screen.dart';
 import 'package:locer/screens/navBar_screens/home_screen.dart';
 import 'package:locer/screens/navBar_screens/wishlist_screen.dart';
-import 'package:locer/widgets/main_drawer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TabsScreen extends StatefulWidget {
   static const routeName = "/tabs-screen";
@@ -12,98 +10,106 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  final _pinController = TextEditingController();
-  final List<Widget> _pages = [
-    HomeScreen(),
-    WishlistScreen(),
-    CartScreen(),
-  ];
-  int _selectedPageIndex = 0;
+  String _currentPage = "home";
+  int _currentIndex = 0;
+  List<String> pageKeys = ["home", "wishlist", "cart"];
+  final Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
+    "home": GlobalKey<NavigatorState>(),
+    "wishlist": GlobalKey<NavigatorState>(),
+    "cart": GlobalKey<NavigatorState>(),
+  };
+  void _selectTab(String tabItem, int index) {
+    if (tabItem == _currentPage) {
+      _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
+    }
+    else{
+      setState(() {
+        _currentPage = tabItem;
+        _currentIndex = index;
+      });
+    }
+  }
 
-  void _selectPage(int index) {
-    setState(() {
-      _selectedPageIndex = index;
-    });
+  Widget _buildOffstageNavigator(String tabItem) {
+    return Offstage(
+      offstage: _currentPage != tabItem,
+      child: TabNavigator(
+        navigatorKey: _navigatorKeys[tabItem]!,
+        tabItem: tabItem,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<String?> openDialog() => showDialog<String>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Enter Pincode"),
-            content: TextField(
-              controller: _pinController,
-              decoration: const InputDecoration(
-                hintText: "841301",
-              ),
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(_pinController.text);
-                  },
-                  child: const Text("SUBMIT")),
-            ],
-          ),
-        );
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          "assets/images/driver.png",
-          height: 45,
+    return WillPopScope(
+      onWillPop: () async {
+        final isFirstRouteCurrentTab =
+            !await _navigatorKeys[_currentPage]!.currentState!.maybePop();
+        if (isFirstRouteCurrentTab) {
+          if (_currentPage != "home") {
+            _selectTab("home", 1);
+            return false;
+          }
+        }
+        return isFirstRouteCurrentTab;
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            _buildOffstageNavigator("home"),
+            _buildOffstageNavigator("wishlist"),
+            _buildOffstageNavigator("cart"),
+          ],
         ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              final pin = await openDialog();
-              if (pin == null || pin.isEmpty) return;
-              final prefs = await SharedPreferences.getInstance();
-              prefs.setString("location_pin", pin);
-              setState(() {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: const Text("Restart to see updated stores."),
-                    action: SnackBarAction(
-                      label: "Dismiss",
-                      onPressed:
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar,
-                    ),
-                  ),
-                );
-              });
-            },
-            icon: const Icon(Icons.add_location_alt_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          ),
-        ],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (index) {
+            _selectTab(pageKeys[index], index);
+          },
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: "Wishlist",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              label: "Cart",
+            ),
+          ],
+        ),
       ),
-      drawer: MainDrawer(),
-      body: _pages[_selectedPageIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedPageIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: "Wishlist",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: "Cart",
-          ),
-        ],
-      ),
+    );
+  }
+}
+
+class TabNavigator extends StatelessWidget {
+  final GlobalKey<NavigatorState> navigatorKey;
+  String tabItem;
+  TabNavigator({Key? key, required this.navigatorKey, required this.tabItem})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Widget child;
+    if (tabItem == "home") {
+      child = HomeScreen();
+    } else if (tabItem == "wishlist") {
+      child = WishlistScreen();
+    } else {
+      child = CartScreen();
+    }
+
+    return Navigator(
+      key: navigatorKey,
+      onGenerateRoute: (routeSettings) {
+        return MaterialPageRoute(builder: (context) => child);
+      },
     );
   }
 }

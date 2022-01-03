@@ -348,7 +348,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.green,
                     ),
-                    margin: const EdgeInsets.all(12),
+                    margin: const EdgeInsets.all(8),
                     child: const Center(
                       child: Text(
                         "Submit Order",

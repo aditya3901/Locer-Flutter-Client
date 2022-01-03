@@ -6,9 +6,16 @@ class OrderConfirmed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Image.asset(
+          "assets/images/driver.png",
+          height: 45,
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Lottie.asset(
@@ -24,27 +31,29 @@ class OrderConfirmed extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 margin:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 100),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black54),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.home,
-                      color: Colors.green,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Return Home',
-                      style: TextStyle(
+                child: FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.add_shopping_cart,
+                        color: Colors.green,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Return to Cart',
+                        style: TextStyle(
                           fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )

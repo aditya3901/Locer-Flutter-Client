@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:locer/screens/checkout_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
 import 'package:locer/utils/models/cart_item_model.dart';
+import 'package:locer/widgets/main_drawer.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -110,64 +111,82 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return (_cart.isNotEmpty)
-        ? (_isLoading == true)
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemBuilder: (ctx, index) {
-                        return cartItem(_cart[index]);
-                      },
-                      itemCount: _cart.length,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (ctx) {
-                        return CheckoutScreen(_cart);
-                      }));
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.green,
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          "assets/images/driver.png",
+          height: 45,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              refreshCart();
+            },
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
+        centerTitle: true,
+      ),
+      drawer: MainDrawer(),
+      body: (_cart.isNotEmpty)
+          ? (_isLoading == true)
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (ctx, index) {
+                          return cartItem(_cart[index]);
+                        },
+                        itemCount: _cart.length,
                       ),
-                      margin: const EdgeInsets.all(12),
-                      child: const Center(
-                        child: Text(
-                          "Proceed to Checkout",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (ctx) {
+                          return CheckoutScreen(_cart);
+                        }));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.green,
+                        ),
+                        margin: const EdgeInsets.all(12),
+                        child: const Center(
+                          child: Text(
+                            "Proceed to Checkout",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ),
+                  ],
+                )
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/empty_cart.png",
+                    width: double.infinity,
+                  ),
+                  const Text(
+                    "Your cart is empty!",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
-              )
-        : Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/images/empty_cart.png",
-                  width: double.infinity,
-                ),
-                const Text(
-                  "Your cart is empty!",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+              ),
             ),
-          );
+    );
   }
 }

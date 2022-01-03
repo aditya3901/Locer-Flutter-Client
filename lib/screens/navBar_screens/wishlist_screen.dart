@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:locer/screens/product_detail_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
 import 'package:locer/utils/models/child_model.dart';
+import 'package:locer/widgets/main_drawer.dart';
 
 class WishlistScreen extends StatefulWidget {
   @override
@@ -102,52 +103,70 @@ class _WishlistScreenState extends State<WishlistScreen> {
       );
     }
 
-    return (_items.isNotEmpty)
-        ? (isLoading == true)
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : ListView(
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          "assets/images/driver.png",
+          height: 45,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              refreshProducts();
+            },
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
+        centerTitle: true,
+      ),
+      drawer: MainDrawer(),
+      body: (_items.isNotEmpty)
+          ? (isLoading == true)
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 14.0,
+                        bottom: 20,
+                      ),
+                      child: Text(
+                        "Your Favourites",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                    ),
+                    Container(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (ctx, index) {
+                          return wishlistItem(_items[index]);
+                        },
+                        itemCount: _items.length,
+                      ),
+                    ),
+                  ],
+                )
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 14.0,
-                      bottom: 20,
-                    ),
-                    child: Text(
-                      "Your Favourites",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
+                  Image.asset(
+                    "assets/images/empty_wishlist.png",
+                    width: double.infinity,
+                    height: 300,
                   ),
-                  Container(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (ctx, index) {
-                        return wishlistItem(_items[index]);
-                      },
-                      itemCount: _items.length,
-                    ),
+                  const SizedBox(height: 30),
+                  const Text(
+                    "Your wishlist is empty!",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
-              )
-        : Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/images/empty_wishlist.png",
-                  width: double.infinity,
-                  height: 300,
-                ),
-                const SizedBox(height: 30),
-                const Text(
-                  "Your wishlist is empty!",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+              ),
             ),
-          );
+    );
   }
 }

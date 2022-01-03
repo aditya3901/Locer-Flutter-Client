@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:locer/screens/auth_screens/login_screen.dart';
 import 'package:locer/utils/models/user_model.dart';
 import 'package:locer/widgets/category_row.dart';
+import 'package:locer/widgets/main_drawer.dart';
 import 'package:locer/widgets/stores_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String username = "";
+  final _pinController = TextEditingController();
   int activeIndex = 0;
   final urlImages = [
     "https://pbs.twimg.com/media/DfFB1BOUcAAR1op.png",
@@ -41,61 +43,118 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        // Welcome User
-        Padding(
-          padding: const EdgeInsets.only(top: 4, bottom: 8),
-          child: Text(
-            "Hi, $username!",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline1,
-          ),
-        ),
-        // Categories
-        CategoryRow(),
-        // Carousel Slider
-        const SizedBox(height: 16),
-        Column(
-          children: [
-            CarouselSlider.builder(
-              itemCount: urlImages.length,
-              itemBuilder: (ctx, index, realIndex) {
-                final image = urlImages[index];
-                return buildImage(image, index);
-              },
-              options: CarouselOptions(
-                height: 220,
-                autoPlay: true,
-                autoPlayAnimationDuration: const Duration(seconds: 2),
-                enlargeCenterPage: true,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    activeIndex = index;
-                  });
-                },
-              ),
+  Future<String?> openDialog() => showDialog<String>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Enter Pincode"),
+          content: TextField(
+            controller: _pinController,
+            decoration: const InputDecoration(
+              hintText: "841301",
             ),
-            const SizedBox(height: 26),
-            buildIndicator(),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(_pinController.text);
+                },
+                child: const Text("SUBMIT")),
           ],
         ),
-        // Stores List
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 20.0,
-            bottom: 8,
-          ),
-          child: Text(
-            "Your Stores",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline1,
-          ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          "assets/images/driver.png",
+          height: 45,
         ),
-        StoresList(),
-      ],
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final pin = await openDialog();
+              if (pin == null || pin.isEmpty) return;
+              final prefs = await SharedPreferences.getInstance();
+              prefs.setString("location_pin", pin);
+              setState(() {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text("Restart to see updated stores."),
+                    action: SnackBarAction(
+                      label: "Dismiss",
+                      onPressed:
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar,
+                    ),
+                  ),
+                );
+              });
+            },
+            icon: const Icon(Icons.add_location_alt_outlined),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search),
+          ),
+        ],
+      ),
+      drawer: MainDrawer(),
+      body: ListView(
+        children: [
+          // Welcome User
+          Padding(
+            padding: const EdgeInsets.only(top: 4, bottom: 8),
+            child: Text(
+              "Hi, $username!",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline1,
+            ),
+          ),
+          // Categories
+          CategoryRow(),
+          // Carousel Slider
+          const SizedBox(height: 16),
+          Column(
+            children: [
+              CarouselSlider.builder(
+                itemCount: urlImages.length,
+                itemBuilder: (ctx, index, realIndex) {
+                  final image = urlImages[index];
+                  return buildImage(image, index);
+                },
+                options: CarouselOptions(
+                  height: 220,
+                  autoPlay: true,
+                  autoPlayAnimationDuration: const Duration(seconds: 2),
+                  enlargeCenterPage: true,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      activeIndex = index;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(height: 26),
+              buildIndicator(),
+            ],
+          ),
+          // Stores List
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 20.0,
+              bottom: 8,
+            ),
+            child: Text(
+              "Your Stores",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline1,
+            ),
+          ),
+          StoresList(),
+        ],
+      ),
     );
   }
 
