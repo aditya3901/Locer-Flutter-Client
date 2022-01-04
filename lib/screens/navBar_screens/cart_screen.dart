@@ -165,7 +165,8 @@ class _CartScreenState extends State<CartScreen> {
                           borderRadius: BorderRadius.circular(8),
                           color: Colors.green,
                         ),
-                        margin: const EdgeInsets.all(12),
+                        margin: const EdgeInsets.only(
+                            left: 12, right: 12, top: 10, bottom: 18),
                         child: const Center(
                           child: Text(
                             "Proceed to Checkout",

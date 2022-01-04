@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:locer/screens/navBar_screens/cart_screen.dart';
 import 'package:locer/screens/navBar_screens/home_screen.dart';
 import 'package:locer/screens/navBar_screens/wishlist_screen.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class TabsScreen extends StatefulWidget {
   static const routeName = "/tabs-screen";
@@ -10,106 +12,71 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  String _currentPage = "home";
-  int _currentIndex = 0;
-  List<String> pageKeys = ["home", "wishlist", "cart"];
-  final Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
-    "home": GlobalKey<NavigatorState>(),
-    "wishlist": GlobalKey<NavigatorState>(),
-    "cart": GlobalKey<NavigatorState>(),
-  };
-  void _selectTab(String tabItem, int index) {
-    if (tabItem == _currentPage) {
-      _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
-    }
-    else{
-      setState(() {
-        _currentPage = tabItem;
-        _currentIndex = index;
-      });
-    }
+  final PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
+
+  List<Widget> _buildScreens() {
+    return [
+      HomeScreen(),
+      WishlistScreen(),
+      CartScreen(),
+    ];
   }
 
-  Widget _buildOffstageNavigator(String tabItem) {
-    return Offstage(
-      offstage: _currentPage != tabItem,
-      child: TabNavigator(
-        navigatorKey: _navigatorKeys[tabItem]!,
-        tabItem: tabItem,
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.home),
+        title: ("Home"),
+        textStyle: const TextStyle(fontWeight: FontWeight.bold),
+        activeColorPrimary: CupertinoColors.systemBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
-    );
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.heart_fill),
+        title: ("Wishlist"),
+        textStyle: const TextStyle(fontWeight: FontWeight.bold),
+        activeColorPrimary: CupertinoColors.systemOrange,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.cart),
+        title: ("Cart"),
+        textStyle: const TextStyle(fontWeight: FontWeight.bold),
+        activeColorPrimary: CupertinoColors.systemGreen,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        final isFirstRouteCurrentTab =
-            !await _navigatorKeys[_currentPage]!.currentState!.maybePop();
-        if (isFirstRouteCurrentTab) {
-          if (_currentPage != "home") {
-            _selectTab("home", 1);
-            return false;
-          }
-        }
-        return isFirstRouteCurrentTab;
-      },
-      child: Scaffold(
-        body: Stack(
-          children: [
-            _buildOffstageNavigator("home"),
-            _buildOffstageNavigator("wishlist"),
-            _buildOffstageNavigator("cart"),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (index) {
-            _selectTab(pageKeys[index], index);
-          },
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
-              label: "Wishlist",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart),
-              label: "Cart",
-            ),
-          ],
-        ),
+    return PersistentTabView(
+      context,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      resizeToAvoidBottomInset: true,
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        colorBehindNavBar: Colors.white,
       ),
-    );
-  }
-}
-
-class TabNavigator extends StatelessWidget {
-  final GlobalKey<NavigatorState> navigatorKey;
-  String tabItem;
-  TabNavigator({Key? key, required this.navigatorKey, required this.tabItem})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Widget child;
-    if (tabItem == "home") {
-      child = HomeScreen();
-    } else if (tabItem == "wishlist") {
-      child = WishlistScreen();
-    } else {
-      child = CartScreen();
-    }
-
-    return Navigator(
-      key: navigatorKey,
-      onGenerateRoute: (routeSettings) {
-        return MaterialPageRoute(builder: (context) => child);
-      },
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: const ItemAnimationProperties(
+        // Navigation Bar's items animation properties.
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: const ScreenTransitionAnimation(
+        // Screen transition animation on change of selected tab.
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 200),
+      ),
+      navBarStyle:
+          NavBarStyle.style1, // Choose the nav bar style with this property.
     );
   }
 }

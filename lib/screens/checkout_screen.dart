@@ -143,7 +143,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 3,
         centerTitle: true,
         title: Text(
           "Checkout",
@@ -354,7 +353,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.green,
                     ),
-                    margin: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.only(
+                        top: 8, left: 8, right: 8, bottom: 14),
                     child: const Center(
                       child: Text(
                         "Submit Order",

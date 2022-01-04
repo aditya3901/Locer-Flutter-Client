@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:locer/providers/theme_provider.dart';
-import 'package:locer/screens/auth_screens/login_screen.dart';
+import 'package:locer/screens/your_orders_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,7 +56,10 @@ class MainDrawer extends StatelessWidget {
               "Your Orders",
               Icons.restaurant,
               () {
-                Navigator.of(context).pop();
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return YourOrdersScreen();
+                }));
               },
             ),
             drawerItem(
