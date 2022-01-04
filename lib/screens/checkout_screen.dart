@@ -203,6 +203,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               Icons.pin,
                               _pinController,
                             ),
+                            const SizedBox(height: 8),
+                            formField(
+                              "Phone",
+                              Icons.phone,
+                              _pinController,
+                            ),
                             Padding(
                               padding: const EdgeInsets.only(top: 14),
                               child: Text(

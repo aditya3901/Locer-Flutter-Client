@@ -50,6 +50,13 @@ class _CartScreenState extends State<CartScreen> {
                   fit: BoxFit.contain,
                   height: 80,
                   width: 80,
+                  imageErrorBuilder: (context, error, stackTrace) =>
+                      Image.asset(
+                    "assets/images/driver.png",
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -62,7 +69,8 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       Text(
                         item.title,
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.visible,
+                        maxLines: 2,
                         style: const TextStyle(fontSize: 16),
                       ),
                       Text(

@@ -146,10 +146,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Hero(
-                tag: widget.productItem.id,
-                child: Image.network(
-                  widget.productItem.imageUrl,
+              Image.network(
+                widget.productItem.imageUrl,
+                width: double.infinity,
+                height: 320,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) => Image.asset(
+                  "assets/images/driver.png",
                   width: double.infinity,
                   height: 320,
                   fit: BoxFit.contain,

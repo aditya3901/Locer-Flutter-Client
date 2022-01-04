@@ -39,14 +39,16 @@ class _ProductItemState extends State<ProductItem> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 4, left: 6, right: 6),
-                  child: Hero(
-                    tag: widget.item.id,
-                    child: FadeInImage(
-                      placeholder: const AssetImage("assets/images/driver.png"), 
-                      image: NetworkImage(widget.item.imageUrl),
-                      fit: BoxFit.contain,
+                  child: FadeInImage(
+                    placeholder: const AssetImage("assets/images/driver.png"),
+                    image: NetworkImage(widget.item.imageUrl),
+                    imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                      "assets/images/driver.png",
                       height: 112,
+                      fit: BoxFit.contain,
                     ),
+                    fit: BoxFit.contain,
+                    height: 112,
                   ),
                 ),
               ),

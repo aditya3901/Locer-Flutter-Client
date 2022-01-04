@@ -52,15 +52,18 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ClipRRect(
-                    child: Hero(
-                      tag: item.id,
-                      child: FadeInImage(
-                        placeholder:
-                            const AssetImage("assets/images/driver.png"),
-                        image: NetworkImage(item.imageUrl),
-                        fit: BoxFit.contain,
+                    child: FadeInImage(
+                      placeholder: const AssetImage("assets/images/driver.png"),
+                      image: NetworkImage(item.imageUrl),
+                      fit: BoxFit.contain,
+                      height: 80,
+                      width: 80,
+                      imageErrorBuilder: (context, error, stackTrace) =>
+                          Image.asset(
+                        "assets/images/driver.png",
                         height: 80,
                         width: 80,
+                        fit: BoxFit.contain,
                       ),
                     ),
                     borderRadius: BorderRadius.circular(8),
@@ -74,7 +77,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         children: [
                           Text(
                             item.title,
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
+                            maxLines: 2,
                             style: const TextStyle(fontSize: 16),
                           ),
                           Text(
