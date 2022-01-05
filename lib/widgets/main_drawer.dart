@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:locer/providers/theme_provider.dart';
@@ -98,7 +99,7 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
               leading: const Icon(Icons.dark_mode),
-              trailing: Switch.adaptive(
+              trailing: CupertinoSwitch(
                 value: themeProvider.isDarkMode,
                 onChanged: (value) {
                   final provider =

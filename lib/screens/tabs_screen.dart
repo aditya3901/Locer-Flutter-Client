@@ -26,23 +26,23 @@ class _TabsScreenState extends State<TabsScreen> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.home),
+        icon: const Icon(Icons.home),
         title: ("Home"),
-        textStyle: const TextStyle(fontWeight: FontWeight.bold),
-        activeColorPrimary: CupertinoColors.systemBlue,
+        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        activeColorPrimary: Colors.blueAccent,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.heart_fill),
+        icon: const Icon(Icons.favorite),
         title: ("Wishlist"),
-        textStyle: const TextStyle(fontWeight: FontWeight.bold),
+        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         activeColorPrimary: CupertinoColors.systemOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.cart),
+        icon: const Icon(Icons.shopping_cart),
         title: ("Cart"),
-        textStyle: const TextStyle(fontWeight: FontWeight.bold),
+        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         activeColorPrimary: CupertinoColors.systemGreen,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -66,14 +66,14 @@ class _TabsScreenState extends State<TabsScreen> {
       popActionScreens: PopActionScreensType.all,
       itemAnimationProperties: const ItemAnimationProperties(
         // Navigation Bar's items animation properties.
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: 500),
         curve: Curves.ease,
       ),
       screenTransitionAnimation: const ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: 500),
       ),
       navBarStyle:
           NavBarStyle.style1, // Choose the nav bar style with this property.
