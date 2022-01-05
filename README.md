@@ -1,6 +1,7 @@
 # locer
 
-![](https://github.com/aditya3901/aditya3901/blob/main/app_screenshots.png)
+![](https://github.com/aditya3901/aditya3901/blob/main/app_screenshots.png)<br><br>
+![](https://github.com/aditya3901/aditya3901/blob/main/app_screenshots_2.png)
 
 ## Getting Started
 
