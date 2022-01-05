@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:locer/screens/product_detail_screen.dart';
 import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/utils/networking.dart';
 import 'package:locer/utils/models/parent_model.dart';
@@ -18,6 +20,7 @@ class _ShopScreenState extends State<ShopScreen> {
   String storeID = "";
   List<ParentModel> categoryItems = [];
   Map<String, List<ChildModel>> map = {};
+  List<ChildModel> searchItems = [];
 
   @override
   void initState() {
@@ -44,6 +47,7 @@ class _ShopScreenState extends State<ShopScreen> {
         var imgUrl =
             "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
         var item = ChildModel(id, title, desc, price, imgUrl, false, storeID);
+        searchItems.add(item); // For Searching over all Products
         if (map.containsKey(type)) {
           map[type]?.add(item);
         } else {
@@ -114,14 +118,22 @@ class _ShopScreenState extends State<ShopScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(searchItems),
+              );
+            },
             icon: const Icon(Icons.search),
           ),
         ],
       ),
       body: SafeArea(
         child: (categoryItems.isEmpty)
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(
+                child: CupertinoActivityIndicator(
+                radius: 20,
+              ))
             : ListView.builder(
                 itemBuilder: (ctx, index) {
                   return shopItem(
@@ -132,6 +144,203 @@ class _ShopScreenState extends State<ShopScreen> {
                 itemCount: categoryItems.length,
               ),
       ),
+    );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  List<ChildModel> searchItems;
+  CustomSearchDelegate(this.searchItems);
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          query = '';
+        },
+        icon: const Icon(Icons.clear),
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        close(context, null);
+      },
+      icon: const Icon(Icons.arrow_back),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    Widget searchItem(ChildModel item) {
+      return InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+            return ProductDetailScreen(item);
+          }));
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black12, width: 0.8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    child: FadeInImage(
+                      placeholder: const AssetImage("assets/images/driver.png"),
+                      image: NetworkImage(item.imageUrl),
+                      fit: BoxFit.contain,
+                      height: 80,
+                      width: 80,
+                      imageErrorBuilder: (context, error, stackTrace) =>
+                          Image.asset(
+                        "assets/images/driver.png",
+                        height: 80,
+                        width: 80,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 14.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.title,
+                            overflow: TextOverflow.visible,
+                            maxLines: 2,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            "\u20B9${item.price}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    List<ChildModel> matchQuery = [];
+    for (var product in searchItems) {
+      if (product.title.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(product);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        return searchItem(matchQuery[index]);
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    Widget searchItem(ChildModel item) {
+      return InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+            return ProductDetailScreen(item);
+          }));
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black12, width: 0.8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    child: FadeInImage(
+                      placeholder: const AssetImage("assets/images/driver.png"),
+                      image: NetworkImage(item.imageUrl),
+                      fit: BoxFit.contain,
+                      height: 80,
+                      width: 80,
+                      imageErrorBuilder: (context, error, stackTrace) =>
+                          Image.asset(
+                        "assets/images/driver.png",
+                        height: 80,
+                        width: 80,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 14.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.title,
+                            overflow: TextOverflow.visible,
+                            maxLines: 2,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            "\u20B9${item.price}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    List<ChildModel> matchQuery = [];
+    for (var product in searchItems) {
+      if (product.title.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(product);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        return searchItem(matchQuery[index]);
+      },
     );
   }
 }

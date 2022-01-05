@@ -25,6 +25,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
   final _pinController = TextEditingController();
+  final _phoneController = TextEditingController();
   bool isChecked = false;
   bool _isSending = false;
   double itemsCost = 0, shippingCost = 0, taxes = 0, totalCost = 0;
@@ -108,15 +109,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
-// Get User's Orders
-// final res = await http.get(
-//   Uri.parse("https://locerappdemo.herokuapp.com/api/orders/allmy"),
-//   headers: {
-//     HttpHeaders.contentTypeHeader: "application/json",
-//     HttpHeaders.authorizationHeader: "Bearer ${user.token}"
-//   },
-// );
-// print(res.body);
 
   Widget formField(
       String label, IconData icon, TextEditingController controller) {
@@ -206,7 +198,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             formField(
                               "Phone",
                               Icons.phone,
-                              _pinController,
+                              _phoneController,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 14),

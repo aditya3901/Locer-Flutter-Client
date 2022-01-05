@@ -2,12 +2,16 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:locer/screens/auth_screens/login_screen.dart';
+import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/utils/models/user_model.dart';
+import 'package:locer/utils/networking.dart';
 import 'package:locer/widgets/category_row.dart';
 import 'package:locer/widgets/main_drawer.dart';
 import 'package:locer/widgets/stores_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../shop_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -24,11 +28,39 @@ class _HomeScreenState extends State<HomeScreen> {
     "https://www.dineout.co.in/blog/wp-content/uploads/2018/10/WhatsApp-Image-2018-10-18-at-8.06.23-PM.jpeg",
     "https://www.shopickr.com/wp-content/uploads/2017/08/foodpanda-freedom-sale-independence-day-offers-2017.jpg",
   ];
+  List<ChildModel> searchItems = [];
 
   @override
   void initState() {
     super.initState();
     getUserData();
+    getSearchItems();
+  }
+
+  void getSearchItems() async {
+    final prefs = await SharedPreferences.getInstance();
+    final pin = prefs.getString("location_pin") ?? "841301";
+    String url = "https://locerappdemo.herokuapp.com/api/stores/location/$pin";
+    NetworkHelper helper = NetworkHelper(url);
+    var stores = await helper.getData();
+    if(stores != null){
+      for(var store in stores){
+        var storeID = store["_id"];
+        var products = store["products"];
+        if(products != null && products != []){
+          for(var product in products){
+            var id = product["_id"];
+            var title = product["title"];
+            var desc = product["description"];
+            var price = product["price"];
+            var imgUrl =
+                "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
+            var item = ChildModel(id, title, desc, price, imgUrl, false, storeID);
+            searchItems.add(item); // For Searching over all Products
+          }
+        }
+      }
+    }
   }
 
   void getUserData() async {
@@ -95,7 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.add_location_alt_outlined),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(searchItems),
+              );
+            },
             icon: const Icon(Icons.search),
           ),
         ],

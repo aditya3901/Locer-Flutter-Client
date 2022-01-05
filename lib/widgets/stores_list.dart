@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:locer/screens/shop_screen.dart';
 import 'package:locer/utils/networking.dart';
@@ -96,10 +97,15 @@ class _StoresListState extends State<StoresList> {
       child: (list.isEmpty)
           ? Padding(
               padding: const EdgeInsets.only(top: 24),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [CircularProgressIndicator()],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  CupertinoActivityIndicator(
+                    radius: 15,
+                  ),
+                  SizedBox(height: 20),
+                  Text("Restart the app if it takes too long"),
+                ],
               ),
             )
           : (list[0].title == "NA")
