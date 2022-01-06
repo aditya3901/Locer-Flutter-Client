@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:locer/screens/auth_screens/login_screen.dart';
 import 'package:locer/utils/models/child_model.dart';
+import 'package:locer/utils/models/store_model.dart';
 import 'package:locer/utils/models/user_model.dart';
 import 'package:locer/utils/networking.dart';
 import 'package:locer/widgets/category_row.dart';
@@ -10,7 +10,7 @@ import 'package:locer/widgets/main_drawer.dart';
 import 'package:locer/widgets/stores_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
+import '../product_detail_screen.dart';
 import '../shop_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "https://www.shopickr.com/wp-content/uploads/2017/08/foodpanda-freedom-sale-independence-day-offers-2017.jpg",
   ];
   List<ChildModel> searchItems = [];
+  List<StoreModel> searchShops = [];
 
   @override
   void initState() {
@@ -43,19 +44,28 @@ class _HomeScreenState extends State<HomeScreen> {
     String url = "https://locerappdemo.herokuapp.com/api/stores/location/$pin";
     NetworkHelper helper = NetworkHelper(url);
     var stores = await helper.getData();
-    if(stores != null){
-      for(var store in stores){
+    if (stores != null) {
+      for (var store in stores) {
+        // Add Store to Shop List
+        var storeItem = StoreModel(
+          store["name"],
+          store["type"],
+          "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${store["filename"]}",
+        );
+        searchShops.add(storeItem);
+        // Add Product to Products List
         var storeID = store["_id"];
         var products = store["products"];
-        if(products != null && products != []){
-          for(var product in products){
+        if (products != null && products != []) {
+          for (var product in products) {
             var id = product["_id"];
             var title = product["title"];
             var desc = product["description"];
             var price = product["price"];
             var imgUrl =
                 "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
-            var item = ChildModel(id, title, desc, price, imgUrl, false, storeID);
+            var item =
+                ChildModel(id, title, desc, price, imgUrl, false, storeID);
             searchItems.add(item); // For Searching over all Products
           }
         }
@@ -130,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               showSearch(
                 context: context,
-                delegate: CustomSearchDelegate(searchItems),
+                delegate: CustomHomeSearchDelegate(searchItems, searchShops),
               );
             },
             icon: const Icon(Icons.search),
@@ -216,4 +226,334 @@ class _HomeScreenState extends State<HomeScreen> {
           dotColor: Colors.black12,
         ),
       );
+}
+
+class CustomHomeSearchDelegate extends SearchDelegate {
+  List<ChildModel> searchItems;
+  List<StoreModel> searchShops;
+  CustomHomeSearchDelegate(this.searchItems, this.searchShops);
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          query = '';
+        },
+        icon: const Icon(Icons.clear),
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        close(context, null);
+      },
+      icon: const Icon(Icons.arrow_back),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    Widget productItem(ChildModel item) {
+      return InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+            return ProductDetailScreen(item);
+          }));
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black12, width: 0.8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    child: FadeInImage(
+                      placeholder: const AssetImage("assets/images/driver.png"),
+                      image: NetworkImage(item.imageUrl),
+                      fit: BoxFit.contain,
+                      height: 80,
+                      width: 80,
+                      imageErrorBuilder: (context, error, stackTrace) =>
+                          Image.asset(
+                        "assets/images/driver.png",
+                        height: 80,
+                        width: 80,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 14.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.title,
+                            overflow: TextOverflow.visible,
+                            maxLines: 2,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            "\u20B9${item.price}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget storeItem(StoreModel store, int index) {
+      return ListTile(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+            return ShopScreen(store.title, index);
+          }));
+        },
+        leading: Card(
+          elevation: 3,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: ClipRRect(
+            child: FadeInImage(
+              fit: BoxFit.cover,
+              width: 58,
+              imageErrorBuilder: (context, error, stackTrace) => Image.network(
+                searchShops[0].imageUrl,
+                width: 58,
+                fit: BoxFit.cover,
+              ),
+              placeholder: NetworkImage(searchShops[0].imageUrl),
+              image: NetworkImage(store.imageUrl),
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        title: Text(
+          store.title,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(store.description),
+        trailing: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.arrow_forward),
+        ),
+      );
+    }
+
+    List<ChildModel> matchProductQuery = [];
+    List<StoreModel> matchShopQuery = [];
+    for (var shop in searchShops) {
+      if (shop.title.toLowerCase().contains(query.toLowerCase())) {
+        matchShopQuery.add(shop);
+      }
+    }
+    for (var product in searchItems) {
+      if (product.title.toLowerCase().contains(query.toLowerCase())) {
+        matchProductQuery.add(product);
+      }
+    }
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: matchShopQuery.length,
+            itemBuilder: (context, index) {
+              int shopIndex = 0;
+              for (var i = 0; i < searchShops.length; i++) {
+                if (searchShops[i] == matchShopQuery[index]) {
+                  shopIndex = i;
+                }
+              }
+              return storeItem(matchShopQuery[index], shopIndex);
+            },
+          ),
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: matchProductQuery.length,
+            itemBuilder: (context, index) {
+              return productItem(matchProductQuery[index]);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    Widget productItem(ChildModel item) {
+      return InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+            return ProductDetailScreen(item);
+          }));
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black12, width: 0.8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    child: FadeInImage(
+                      placeholder: const AssetImage("assets/images/driver.png"),
+                      image: NetworkImage(item.imageUrl),
+                      fit: BoxFit.contain,
+                      height: 80,
+                      width: 80,
+                      imageErrorBuilder: (context, error, stackTrace) =>
+                          Image.asset(
+                        "assets/images/driver.png",
+                        height: 80,
+                        width: 80,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 14.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.title,
+                            overflow: TextOverflow.visible,
+                            maxLines: 2,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            "\u20B9${item.price}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget storeItem(StoreModel store, int index) {
+      return ListTile(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+            return ShopScreen(store.title, index);
+          }));
+        },
+        leading: Card(
+          elevation: 3,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: ClipRRect(
+            child: FadeInImage(
+              fit: BoxFit.cover,
+              width: 58,
+              imageErrorBuilder: (context, error, stackTrace) => Image.network(
+                searchShops[0].imageUrl,
+                width: 58,
+                fit: BoxFit.cover,
+              ),
+              placeholder: NetworkImage(searchShops[0].imageUrl),
+              image: NetworkImage(store.imageUrl),
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        title: Text(
+          store.title,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(store.description),
+        trailing: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.arrow_forward),
+        ),
+      );
+    }
+
+    List<ChildModel> matchProductQuery = [];
+    List<StoreModel> matchShopQuery = [];
+    for (var shop in searchShops) {
+      if (shop.title.toLowerCase().contains(query.toLowerCase())) {
+        matchShopQuery.add(shop);
+      }
+    }
+    for (var product in searchItems) {
+      if (product.title.toLowerCase().contains(query.toLowerCase())) {
+        matchProductQuery.add(product);
+      }
+    }
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: matchShopQuery.length,
+            itemBuilder: (context, index) {
+              int shopIndex = 0;
+              for (var i = 0; i < searchShops.length; i++) {
+                if (searchShops[i] == matchShopQuery[index]) {
+                  shopIndex = i;
+                }
+              }
+              return storeItem(matchShopQuery[index], shopIndex);
+            },
+          ),
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: matchProductQuery.length,
+            itemBuilder: (context, index) {
+              return productItem(matchProductQuery[index]);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }

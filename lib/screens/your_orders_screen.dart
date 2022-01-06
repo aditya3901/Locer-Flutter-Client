@@ -134,7 +134,7 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
                 item["_id"],
                 style: const TextStyle(fontSize: 15),
               ),
-              const Divider(thickness: 2),
+              const Divider(thickness: 1),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6.0),
                 child: IntrinsicHeight(
@@ -144,7 +144,7 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Order Location"),
+                          const Text("Location"),
                           const SizedBox(height: 4),
                           Text(
                             "${item["shippingAddress"]["postalCode"]}",
@@ -156,7 +156,7 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Order Price"),
+                          const Text("Price"),
                           const SizedBox(height: 4),
                           Text(
                             "\u20B9${item["totalPrice"]}",
@@ -168,7 +168,7 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Payment Method"),
+                          const Text("Payment"),
                           const SizedBox(height: 4),
                           Text(
                             "${item["paymentMethod"]}",
@@ -180,8 +180,9 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
                   ),
                 ),
               ),
-              const Divider(thickness: 2),
+              const Divider(thickness: 1),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Icon(CupertinoIcons.clock),
                   const SizedBox(width: 8),
