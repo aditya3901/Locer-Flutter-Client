@@ -14,7 +14,10 @@ class YourOrdersScreen extends StatefulWidget {
 }
 
 class _YourOrdersScreenState extends State<YourOrdersScreen> {
-  final List<Map<String, dynamic>> _ordersList = [];
+  final List<Map<String, dynamic>> _ordersListAccepted = [];
+  final List<Map<String, dynamic>> _ordersListShipped = [];
+  final List<Map<String, dynamic>> _ordersListDelivered = [];
+  bool _isLoading = false;
 
   Future<User> getUserData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -25,6 +28,9 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
   }
 
   void getOrders() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       User user = await getUserData();
       final res = await http.get(
@@ -36,10 +42,21 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
       );
       var orders = jsonDecode(res.body);
       for (var order in orders) {
-        _ordersList.add(order);
+        if (order["isAccepted"] == true) {
+          _ordersListAccepted.add(order);
+        } else if (order["isShipped"] == true) {
+          _ordersListShipped.add(order);
+        } else if (order["isDelivered"] == true) {
+          _ordersListDelivered.add(order);
+        }
       }
-      setState(() {});
+      setState(() {
+        _isLoading = false;
+      });
     } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
       print(e);
     }
   }
@@ -199,24 +216,54 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
   }
 
   Widget accepted() {
-    return (_ordersList.isEmpty == true)
+    return (_isLoading)
         ? const Center(
-            child: CupertinoActivityIndicator(radius: 20),
+            child: CupertinoActivityIndicator(radius: 18),
           )
-        : ListView.builder(
-            itemBuilder: (context, index) {
-              return orderItem(_ordersList[index]);
-            },
-            itemCount: _ordersList.length,
-          );
+        : (_ordersListAccepted.isEmpty)
+            ? const Center(
+                child: Text("No order accepted yet"),
+              )
+            : ListView.builder(
+                itemBuilder: (context, index) {
+                  return orderItem(_ordersListAccepted[index]);
+                },
+                itemCount: _ordersListAccepted.length,
+              );
   }
 
   Widget shipped() {
-    return Container();
+    return (_isLoading)
+        ? const Center(
+            child: CupertinoActivityIndicator(radius: 18),
+          )
+        : (_ordersListShipped.isEmpty)
+            ? const Center(
+                child: Text("No order shipped yet"),
+              )
+            : ListView.builder(
+                itemBuilder: (context, index) {
+                  return orderItem(_ordersListShipped[index]);
+                },
+                itemCount: _ordersListShipped.length,
+              );
   }
 
   Widget delivered() {
-    return Container();
+    return (_isLoading)
+        ? const Center(
+            child: CupertinoActivityIndicator(radius: 18),
+          )
+        : (_ordersListDelivered.isEmpty)
+            ? const Center(
+                child: Text("No order delivered yet"),
+              )
+            : ListView.builder(
+                itemBuilder: (context, index) {
+                  return orderItem(_ordersListDelivered[index]);
+                },
+                itemCount: _ordersListDelivered.length,
+              );
   }
 }
 
