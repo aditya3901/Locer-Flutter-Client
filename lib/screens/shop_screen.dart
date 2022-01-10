@@ -106,16 +106,16 @@ class _ShopScreenState extends State<ShopScreen> {
                       TextSpan(
                         text: "View More",
                         style: TextStyle(
-                          color: Theme.of(context).primaryColor,
+                          color: Colors.green,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                           fontFamily: GoogleFonts.robotoSlab().fontFamily,
                         ),
                       ),
-                      WidgetSpan(
+                      const WidgetSpan(
                         child: Icon(
                           CupertinoIcons.right_chevron,
-                          color: Theme.of(context).primaryColor,
+                          color: Colors.green,
                           size: 15,
                         ),
                         alignment: PlaceholderAlignment.middle,
