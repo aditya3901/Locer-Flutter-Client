@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:locer/screens/product_detail_screen.dart';
 import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/utils/networking.dart';
@@ -76,19 +77,50 @@ class _ShopScreenState extends State<ShopScreen> {
             children: [
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 10,
+                  padding: const EdgeInsets.only(
+                    left: 14,
+                    right: 14,
+                    top: 10,
                   ),
                   child: Text(
                     catTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 17,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       wordSpacing: -1,
                     ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(
+                  left: 14,
+                  right: 4,
+                  top: 10,
+                ),
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "View More",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          fontFamily: GoogleFonts.robotoSlab().fontFamily,
+                        ),
+                      ),
+                      WidgetSpan(
+                        child: Icon(
+                          CupertinoIcons.right_chevron,
+                          color: Theme.of(context).primaryColor,
+                          size: 15,
+                        ),
+                        alignment: PlaceholderAlignment.middle,
+                      ),
+                    ],
                   ),
                 ),
               ),
