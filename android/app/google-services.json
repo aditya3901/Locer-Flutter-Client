@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "801332565840",
+    "project_id": "locer-321806",
+    "storage_bucket": "locer-321806.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801332565840:android:8eeb8d7522cc2018f47e55",
+        "android_client_info": {
+          "package_name": "com.locer.locer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801332565840-e9rr3msnj30eftt3lq5qb9a5j9ahsf7n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrilngYG4uF_WJi0zEhUiBKzZCysXPIfA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "801332565840-e9rr3msnj30eftt3lq5qb9a5j9ahsf7n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

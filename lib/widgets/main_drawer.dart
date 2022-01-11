@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -137,6 +138,7 @@ class MainDrawer extends StatelessWidget {
                 prefs.clear();
                 await ProductsDatabase.instance.clearWishlistTable();
                 await ProductsDatabase.instance.clearCartTable();
+                FirebaseAuth.instance.signOut();
                 Phoenix.rebirth(context);
               },
             ),
