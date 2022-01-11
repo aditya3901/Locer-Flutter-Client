@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:locer/screens/auth_screens/signup_screen.dart';
 import 'package:locer/utils/models/user_model.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -64,6 +65,50 @@ class _LoginScreenState extends State<LoginScreen> {
           _showSpinner = false;
         });
       }
+    }
+  }
+
+  void googleSignIn() async {
+    setState(() {
+      _showSpinner = true;
+    });
+    final googleUser = await GoogleSignIn().signIn();
+    if (googleUser != null) {
+      final email = googleUser.email;
+      final response = await http.post(
+          Uri.parse(_loginUrl),
+          body: {
+            "email": email,
+            "password": "123"
+          },
+        );
+        final jsonData = jsonDecode(response.body);
+        if (jsonData["message"] == "Incorrect email or password!") {
+          setState(() {
+            _showSpinner = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text("Account doesn't exist. SignUp first."),
+              action: SnackBarAction(
+                label: "Dismiss",
+                onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
+              ),
+            ),
+          );
+        } else {
+          // final prefs = await SharedPreferences.getInstance();
+          // String json = jsonEncode(jsonData); // Convert Json to String
+          // prefs.setString("current_user", json);
+          setState(() {
+            _showSpinner = false;
+          });
+          // Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
+        }
+    } else {
+      setState(() {
+        _showSpinner = false;
+      });
     }
   }
 
@@ -184,16 +229,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border.all(color: Colors.black),
-                            color: Colors.white.withOpacity(0.5),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          width: double.infinity,
-                          child: InkWell(
-                            onTap: () {},
+                        InkWell(
+                          onTap: googleSignIn,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              border: Border.all(color: Colors.black),
+                              color: Colors.white.withOpacity(0.5),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            width: double.infinity,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,

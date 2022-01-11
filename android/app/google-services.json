@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "801332565840-e9rr3msnj30eftt3lq5qb9a5j9ahsf7n.apps.googleusercontent.com",
+          "client_id": "801332565840-11mca8voirre80ar9e19is2pf9o4gtpo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.locer.locer",
+            "certificate_hash": "76652a3a071dd290312c77dcac5f4434869e90ca"
+          }
+        },
+        {
+          "client_id": "801332565840-v493loef2tb9jes6vqtk6520sunbltrg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
