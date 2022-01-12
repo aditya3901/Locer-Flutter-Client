@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>801332565840-j4gbbcqdngvamruv5c3bppcsnmujo7g5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.801332565840-j4gbbcqdngvamruv5c3bppcsnmujo7g5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>801332565840-11mca8voirre80ar9e19is2pf9o4gtpo.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCBNjvIYYDXAWR_xrD2fPkmgtK78NpfwyQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>801332565840</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.locer.locer</string>
+	<key>PROJECT_ID</key>
+	<string>locer-321806</string>
+	<key>STORAGE_BUCKET</key>
+	<string>locer-321806.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:801332565840:ios:a6343de171bf3133f47e55</string>
+</dict>
+</plist>
