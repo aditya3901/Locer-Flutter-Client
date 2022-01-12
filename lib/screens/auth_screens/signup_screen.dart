@@ -1,8 +1,16 @@
+import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:locer/screens/auth_screens/login_screen.dart';
 import 'package:locer/screens/auth_screens/verify_email_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import '../tabs_screen.dart';
+
+const String _registerUrl =
+    "https://locerappdemo.herokuapp.com/api/users/register";
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = "/signup";
@@ -57,6 +65,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _showSpinner = false;
         });
       }
+    }
+  }
+
+  void googleSignIn() async {
+    setState(() {
+      _showSpinner = true;
+    });
+    final googleUser = await GoogleSignIn().signIn();
+    if (googleUser != null) {
+      final name = googleUser.displayName;
+      final email = googleUser.email;
+      final response = await http.post(
+        Uri.parse(_registerUrl),
+        body: {"name": name, "email": email, "password": "123"},
+      );
+      final jsonData = jsonDecode(response.body);
+      if (jsonData["message"] == "User already exists") {
+        setState(() {
+          _showSpinner = false;
+        });
+        GoogleSignIn().signOut();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("User already exist. Go to Login."),
+            action: SnackBarAction(
+              label: "Dismiss",
+              onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
+            ),
+          ),
+        );
+      } else {
+        final prefs = await SharedPreferences.getInstance();
+        String json = jsonEncode(jsonData); // Convert Json to String
+        prefs.setString("current_user", json);
+        setState(() {
+          _showSpinner = false;
+        });
+        Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
+      }
+    } else {
+      setState(() {
+        _showSpinner = false;
+      });
     }
   }
 
@@ -191,16 +242,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border.all(color: Colors.black),
-                            color: Colors.white.withOpacity(0.5),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          width: double.infinity,
-                          child: InkWell(
-                            onTap: () {},
+                        InkWell(
+                          onTap: googleSignIn,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              border: Border.all(color: Colors.black),
+                              color: Colors.white.withOpacity(0.5),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            width: double.infinity,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,

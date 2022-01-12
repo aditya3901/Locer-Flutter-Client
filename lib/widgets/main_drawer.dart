@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/your_orders_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
@@ -139,6 +140,7 @@ class MainDrawer extends StatelessWidget {
                 await ProductsDatabase.instance.clearWishlistTable();
                 await ProductsDatabase.instance.clearCartTable();
                 FirebaseAuth.instance.signOut();
+                GoogleSignIn().signOut();
                 Phoenix.rebirth(context);
               },
             ),

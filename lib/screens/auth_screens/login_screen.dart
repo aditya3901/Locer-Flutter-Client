@@ -76,35 +76,33 @@ class _LoginScreenState extends State<LoginScreen> {
     if (googleUser != null) {
       final email = googleUser.email;
       final response = await http.post(
-          Uri.parse(_loginUrl),
-          body: {
-            "email": email,
-            "password": "123"
-          },
-        );
-        final jsonData = jsonDecode(response.body);
-        if (jsonData["message"] == "Incorrect email or password!") {
-          setState(() {
-            _showSpinner = false;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text("Account doesn't exist. SignUp first."),
-              action: SnackBarAction(
-                label: "Dismiss",
-                onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
-              ),
+        Uri.parse(_loginUrl),
+        body: {"email": email, "password": "123"},
+      );
+      final jsonData = jsonDecode(response.body);
+      if (jsonData["message"] == "Incorrect email or password!") {
+        setState(() {
+          _showSpinner = false;
+        });
+        GoogleSignIn().signOut();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Account doesn't exist. SignUp."),
+            action: SnackBarAction(
+              label: "Dismiss",
+              onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
             ),
-          );
-        } else {
-          // final prefs = await SharedPreferences.getInstance();
-          // String json = jsonEncode(jsonData); // Convert Json to String
-          // prefs.setString("current_user", json);
-          setState(() {
-            _showSpinner = false;
-          });
-          // Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
-        }
+          ),
+        );
+      } else {
+        final prefs = await SharedPreferences.getInstance();
+        String json = jsonEncode(jsonData); // Convert Json to String
+        prefs.setString("current_user", json);
+        setState(() {
+          _showSpinner = false;
+        });
+        Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
+      }
     } else {
       setState(() {
         _showSpinner = false;
