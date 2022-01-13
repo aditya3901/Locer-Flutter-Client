@@ -7,6 +7,7 @@ import 'package:locer/utils/networking.dart';
 import 'package:locer/utils/models/parent_model.dart';
 import 'package:locer/widgets/product_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ShopScreen extends StatefulWidget {
   String title;
@@ -65,6 +66,54 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
+  Widget buildFoodShimmer() {
+    return Column(
+      children: [
+        Shimmer.fromColors(
+          baseColor: Colors.grey[400]!,
+          highlightColor: Colors.grey[300]!,
+          child: Container(
+            margin: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 4,
+            ),
+            height: 34,
+            decoration: BoxDecoration(
+              color: Colors.black54,
+              borderRadius: BorderRadius.circular(6),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 220,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 3,
+            itemBuilder: (_, index) {
+              return Shimmer.fromColors(
+                baseColor: Colors.grey[400]!,
+                highlightColor: Colors.grey[300]!,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black45,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  width: 160,
+                  margin: const EdgeInsets.only(
+                    top: 10,
+                    left: 10,
+                    bottom: 16,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget shopItem(String catTitle, List<ChildModel> items) {
@@ -89,7 +138,6 @@ class _ShopScreenState extends State<ShopScreen> {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      wordSpacing: -1,
                     ),
                   ),
                 ),
@@ -162,10 +210,13 @@ class _ShopScreenState extends State<ShopScreen> {
       ),
       body: SafeArea(
         child: (categoryItems.isEmpty)
-            ? const Center(
-                child: CupertinoActivityIndicator(
-                radius: 20,
-              ))
+            ? ListView.builder(
+                shrinkWrap: true,
+                itemCount: 5,
+                itemBuilder: (_, index) {
+                  return buildFoodShimmer();
+                },
+              )
             : ListView.builder(
                 itemBuilder: (ctx, index) {
                   return shopItem(

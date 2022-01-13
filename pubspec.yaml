@@ -47,6 +47,7 @@ dependencies:
   lottie: ^1.2.1 # Lottie Animation Library
   flutter_phoenix: ^1.0.0 # To Restart App after Logout
   persistent_bottom_nav_bar: ^4.0.2 # Persistent Bottom NavBar
+  shimmer: ^2.0.0 # Shimmer Effect 
 
 dev_dependencies:
   flutter_test:
