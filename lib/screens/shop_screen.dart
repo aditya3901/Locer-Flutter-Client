@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/product_detail_screen.dart';
 import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/utils/networking.dart';
 import 'package:locer/utils/models/parent_model.dart';
 import 'package:locer/widgets/product_item.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -75,7 +77,7 @@ class _ShopScreenState extends State<ShopScreen> {
           child: Container(
             margin: const EdgeInsets.only(
               left: 10,
-              right: 10,
+              right: 222,
               top: 4,
             ),
             height: 34,
@@ -135,40 +137,13 @@ class _ShopScreenState extends State<ShopScreen> {
                     catTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: Provider.of<ThemeProvider>(context).isDarkMode
+                          ? Colors.white
+                          : Colors.black54,
                     ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(
-                  left: 14,
-                  right: 4,
-                  top: 10,
-                ),
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "View More",
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          fontFamily: GoogleFonts.robotoSlab().fontFamily,
-                        ),
-                      ),
-                      const WidgetSpan(
-                        child: Icon(
-                          CupertinoIcons.right_chevron,
-                          color: Colors.green,
-                          size: 15,
-                        ),
-                        alignment: PlaceholderAlignment.middle,
-                      ),
-                    ],
                   ),
                 ),
               ),

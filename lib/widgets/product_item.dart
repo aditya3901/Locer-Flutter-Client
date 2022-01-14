@@ -18,7 +18,7 @@ class _ProductItemState extends State<ProductItem> {
       margin: const EdgeInsets.only(
         top: 8,
         left: 8,
-        bottom: 8,
+        bottom: 6,
       ),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -42,7 +42,8 @@ class _ProductItemState extends State<ProductItem> {
                   child: FadeInImage(
                     placeholder: const AssetImage("assets/images/driver.png"),
                     image: NetworkImage(widget.item.imageUrl),
-                    imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                    imageErrorBuilder: (context, error, stackTrace) =>
+                        Image.asset(
                       "assets/images/driver.png",
                       height: 112,
                       fit: BoxFit.contain,
