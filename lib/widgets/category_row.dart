@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:locer/screens/category_screen.dart';
 
 class CategoryRow extends StatelessWidget {
   @override
@@ -40,7 +39,11 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+            return CategoryScreen(title);
+          }));
+        },
         child: ListTile(
           title: Icon(
             imageUrl,
