@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/checkout_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
 import 'package:locer/utils/models/cart_item_model.dart';
 import 'package:locer/widgets/main_drawer.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -71,30 +73,56 @@ class _CartScreenState extends State<CartScreen> {
                         item.title,
                         overflow: TextOverflow.visible,
                         maxLines: 2,
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        "\u20B9${item.price}",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 15,
+                          color: Provider.of<ThemeProvider>(context).isDarkMode
+                              ? Colors.white
+                              : Colors.black54,
                         ),
+                      ),
+                      const Divider(thickness: 0.8),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Price: \u20B9",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color:
+                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            "${item.price}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ),
-              Card(
-                elevation: 2,
-                child: Center(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    child: Text(
-                      "${item.count}",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Card(
+                  elevation: 2,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12),
+                      child: Text(
+                        "${item.count}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -145,6 +173,7 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     Expanded(
                       child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (ctx, index) {
                           return cartItem(_cart[index]);

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/product_detail_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
 import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/widgets/main_drawer.dart';
+import 'package:provider/provider.dart';
 
 class WishlistScreen extends StatefulWidget {
   @override
@@ -79,21 +81,45 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             item.title,
                             overflow: TextOverflow.visible,
                             maxLines: 2,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            "\u20B9${item.price}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 15,
+                              color:
+                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
                             ),
+                          ),
+                          const Divider(thickness: 0.8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Price: \u20B9",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Provider.of<ThemeProvider>(context)
+                                          .isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                "${item.price}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.only(left: 12, right: 8),
                     child: Icon(
                       Icons.favorite,
                       color: Colors.green,
@@ -130,6 +156,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   child: CircularProgressIndicator(),
                 )
               : ListView(
+                  physics: const BouncingScrollPhysics(),
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(

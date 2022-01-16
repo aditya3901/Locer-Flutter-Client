@@ -149,6 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: MainDrawer(),
       body: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
           // Welcome User
           Padding(

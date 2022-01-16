@@ -193,6 +193,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 },
               )
             : ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 itemBuilder: (ctx, index) {
                   return shopItem(
                     categoryItems[index].categoryTitle,
