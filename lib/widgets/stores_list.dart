@@ -112,7 +112,7 @@ class _StoresListState extends State<StoresList> {
               ? const Padding(
                   padding: EdgeInsets.all(24),
                   child: Text(
-                    "We regret inform you that we are not yet operating at your location. We are currently operating at Chhapra, Bihar(841301) Hopefully we will see you soon.",
+                    "We regret to inform you that we are not yet operating at your location. We are currently operating at Chhapra, Bihar(841301) Hopefully we will see you soon.",
                     textAlign: TextAlign.center,
                   ),
                 )
