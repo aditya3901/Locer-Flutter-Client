@@ -135,9 +135,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          widget.productItem.title,
-          style: Theme.of(context).textTheme.headline1,
+        title: Image.asset(
+          "assets/images/driver.png",
+          height: 45,
         ),
       ),
       body: ModalProgressHUD(
@@ -158,27 +158,88 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   fit: BoxFit.contain,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 14,
-                  top: 14,
-                  right: 14,
-                ),
-                child: Text(
-                  widget.productItem.title,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 14,
-                ),
-                child: Text(
-                  widget.productItem.description,
-                  style: const TextStyle(
-                    fontSize: 16,
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                          ),
+                          child: Text(
+                            widget.productItem.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.visible,
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                          ),
+                          child: Text(
+                            widget.productItem.description,
+                            maxLines: 2,
+                            overflow: TextOverflow.visible,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  Container(
+                    width: 64,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF66CDAA),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                      ),
+                    ),
+                    child: IconButton(
+                      onPressed: () async {
+                        if (isFavourite == false) {
+                          isFavourite = true;
+                          final item = ChildModel(
+                            widget.productItem.id,
+                            widget.productItem.title,
+                            widget.productItem.description,
+                            widget.productItem.price,
+                            widget.productItem.imageUrl,
+                            isFavourite,
+                            widget.productItem.storeID,
+                          );
+                          await ProductsDatabase.instance.create(item);
+                        } else if (isFavourite == true) {
+                          isFavourite = false;
+                          await ProductsDatabase.instance
+                              .delete(widget.productItem.id);
+                        }
+                        setState(() {});
+                      },
+                      icon: (isFavourite)
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.white,
+                              size: 26,
+                            )
+                          : const Icon(
+                              Icons.favorite_outline,
+                              color: Colors.white,
+                              size: 26,
+                            ),
+                    ),
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.all(14),
@@ -194,7 +255,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Colors.black12,
+                  color: Colors.black.withOpacity(0.1),
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 margin: const EdgeInsets.only(
@@ -205,15 +266,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        if (count > 1) {
-                          setState(() {
-                            count--;
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.remove),
+                    Card(
+                      shape: const CircleBorder(),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 6,
+                        horizontal: 10,
+                      ),
+                      child: SizedBox(
+                        height: 45,
+                        width: 45,
+                        child: IconButton(
+                          onPressed: () {
+                            if (count > 1) {
+                              setState(() {
+                                count--;
+                              });
+                            }
+                          },
+                          icon: const Icon(Icons.remove),
+                        ),
+                      ),
                     ),
                     Text(
                       "$count",
@@ -223,13 +295,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          count++;
-                        });
-                      },
-                      icon: const Icon(Icons.add),
+                    Card(
+                      shape: const CircleBorder(),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 6,
+                        horizontal: 10,
+                      ),
+                      child: SizedBox(
+                        height: 45,
+                        width: 45,
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              count++;
+                            });
+                          },
+                          icon: const Icon(Icons.add),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -264,30 +347,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          if (isFavourite == false) {
-            isFavourite = true;
-            final item = ChildModel(
-              widget.productItem.id,
-              widget.productItem.title,
-              widget.productItem.description,
-              widget.productItem.price,
-              widget.productItem.imageUrl,
-              isFavourite,
-              widget.productItem.storeID,
-            );
-            await ProductsDatabase.instance.create(item);
-          } else if (isFavourite == true) {
-            isFavourite = false;
-            await ProductsDatabase.instance.delete(widget.productItem.id);
-          }
-          setState(() {});
-        },
-        child: (isFavourite)
-            ? const Icon(Icons.favorite)
-            : const Icon(Icons.favorite_outline),
       ),
     );
   }
