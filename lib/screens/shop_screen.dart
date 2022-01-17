@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/product_detail_screen.dart';
 import 'package:locer/utils/models/child_model.dart';
@@ -283,14 +281,37 @@ class CustomSearchDelegate extends SearchDelegate {
                             item.title,
                             overflow: TextOverflow.visible,
                             maxLines: 2,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            "\u20B9${item.price}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 15,
+                              color:
+                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
                             ),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Price: \u20B9",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Provider.of<ThemeProvider>(context)
+                                          .isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                "${item.price}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -368,14 +389,37 @@ class CustomSearchDelegate extends SearchDelegate {
                             item.title,
                             overflow: TextOverflow.visible,
                             maxLines: 2,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            "\u20B9${item.price}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 15,
+                              color:
+                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
                             ),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Price: \u20B9",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Provider.of<ThemeProvider>(context)
+                                          .isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                "${item.price}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

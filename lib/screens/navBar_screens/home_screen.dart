@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/utils/models/store_model.dart';
 import 'package:locer/utils/models/user_model.dart';
@@ -8,6 +9,7 @@ import 'package:locer/utils/networking.dart';
 import 'package:locer/widgets/category_row.dart';
 import 'package:locer/widgets/main_drawer.dart';
 import 'package:locer/widgets/stores_list.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../product_detail_screen.dart';
@@ -306,14 +308,37 @@ class CustomHomeSearchDelegate extends SearchDelegate {
                             item.title,
                             overflow: TextOverflow.visible,
                             maxLines: 2,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            "\u20B9${item.price}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 15,
+                              color:
+                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
                             ),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Price: \u20B9",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Provider.of<ThemeProvider>(context)
+                                          .isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                "${item.price}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -457,14 +482,37 @@ class CustomHomeSearchDelegate extends SearchDelegate {
                             item.title,
                             overflow: TextOverflow.visible,
                             maxLines: 2,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            "\u20B9${item.price}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 15,
+                              color:
+                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
                             ),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Price: \u20B9",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Provider.of<ThemeProvider>(context)
+                                          .isDarkMode
+                                      ? Colors.white
+                                      : Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                "${item.price}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
