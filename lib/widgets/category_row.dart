@@ -1,28 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:locer/screens/category_screen.dart';
+import 'package:locer/screens/category_screens/beverages_screen.dart';
+import 'package:locer/screens/category_screens/personal_care_screen.dart';
+import 'package:locer/screens/category_screens/snacks_screen.dart';
+import 'package:locer/screens/category_screens/staples_screen.dart';
 
 class CategoryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 80,
       child: Row(
         children: [
           CategoryItem(
-            title: "Dairy",
-            imageUrl: Icons.cake,
+            title: "Beverages",
+            icon: Icons.emoji_food_beverage,
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                return BeveragesScreen();
+              }));
+            },
           ),
           CategoryItem(
             title: "Staples",
-            imageUrl: Icons.grain,
+            icon: Icons.grain,
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                return StaplesScreen();
+              }));
+            },
           ),
           CategoryItem(
             title: "Snacks",
-            imageUrl: Icons.fastfood,
+            icon: Icons.fastfood,
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                return SnacksScreen();
+              }));
+            },
           ),
           CategoryItem(
-            title: "Beauty",
-            imageUrl: Icons.air,
+            title: "Hygiene",
+            icon: Icons.air,
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                return PersonalCareScreen();
+              }));
+            },
           ),
         ],
       ),
@@ -31,22 +54,20 @@ class CategoryRow extends StatelessWidget {
 }
 
 class CategoryItem extends StatelessWidget {
-  final IconData imageUrl;
+  final IconData icon;
   final String title;
-  CategoryItem({required this.title, required this.imageUrl});
+  final VoidCallback onTap;
+  const CategoryItem(
+      {required this.title, required this.icon, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-            return CategoryScreen(title);
-          }));
-        },
+        onTap: onTap,
         child: ListTile(
           title: Icon(
-            imageUrl,
+            icon,
             color: Colors.green,
             size: 35,
           ),
