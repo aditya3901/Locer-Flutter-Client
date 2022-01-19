@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:locer/utils/models/child_model.dart';
+import 'package:locer/utils/models/store_model.dart';
 import 'package:locer/widgets/product_item.dart';
 
 class CategoryShopItem extends StatelessWidget {
   const CategoryShopItem(
-    this.catTitle,
+    this.store,
     this.items,
   );
 
-  final String catTitle;
+  final StoreModel store;
   final List<ChildModel> items;
 
   @override
@@ -30,10 +31,16 @@ class CategoryShopItem extends StatelessWidget {
               ),
               margin: const EdgeInsets.only(top: 8, left: 8),
               padding: const EdgeInsets.all(5),
-              child: Image.asset(
-                "assets/images/driver.png",
-                width: 40,
+              child: FadeInImage(
                 fit: BoxFit.cover,
+                width: 40,
+                imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                  "assets/images/driver.png",
+                  width: 40,
+                  fit: BoxFit.cover,
+                ),
+                placeholder: const AssetImage("assets/images/driver.png"),
+                image: NetworkImage(store.imageUrl),
               ),
             ),
             Expanded(
@@ -46,7 +53,7 @@ class CategoryShopItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      catTitle,
+                      store.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -54,8 +61,8 @@ class CategoryShopItem extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
-                      "Kirana & General Store",
+                    Text(
+                      store.description,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
