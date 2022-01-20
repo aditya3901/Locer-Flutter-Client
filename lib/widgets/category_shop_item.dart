@@ -30,17 +30,20 @@ class CategoryShopItem extends StatelessWidget {
                 ),
               ),
               margin: const EdgeInsets.only(top: 8, left: 8),
-              padding: const EdgeInsets.all(5),
-              child: FadeInImage(
-                fit: BoxFit.cover,
-                width: 40,
-                imageErrorBuilder: (context, error, stackTrace) => Image.asset(
-                  "assets/images/driver.png",
-                  width: 40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: FadeInImage(
                   fit: BoxFit.cover,
+                  width: 50,
+                  imageErrorBuilder: (context, error, stackTrace) =>
+                      Image.asset(
+                    "assets/images/driver.png",
+                    width: 50,
+                    fit: BoxFit.cover,
+                  ),
+                  placeholder: const AssetImage("assets/images/driver.png"),
+                  image: NetworkImage(store.imageUrl),
                 ),
-                placeholder: const AssetImage("assets/images/driver.png"),
-                image: NetworkImage(store.imageUrl),
               ),
             ),
             Expanded(
