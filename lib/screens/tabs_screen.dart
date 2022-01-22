@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:locer/screens/navBar_screens/cart_screen.dart';
@@ -12,6 +13,37 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final fbm = FirebaseMessaging.instance;
+    fbm.requestPermission();
+    // If app is on foreground
+    FirebaseMessaging.onMessage.listen((message) {
+      // Show Dialog if app is Open
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: ListTile(
+            title: Text("${message.notification?.title}"),
+            subtitle: Text("${message.notification?.body}"),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+      return;
+    });
+    // If app is in background or is terminated
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      return;
+    });
+  }
+
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
 
