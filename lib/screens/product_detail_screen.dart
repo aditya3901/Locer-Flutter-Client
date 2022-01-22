@@ -99,14 +99,32 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text(
-                "Your cart already contains items from another store.\nRemove them to add items from new store."),
+            title: ListTile(
+              contentPadding: const EdgeInsets.all(0),
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  "Product can't be added to cart",
+                  style: Theme.of(context).textTheme.headline1?.copyWith(
+                        fontSize: 18,
+                      ),
+                ),
+              ),
+              subtitle: const Text(
+                "Your cart already contains items from another store.\nRemove them to add items from new store.",
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
             actions: [
               TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("OK")),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  "OK",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           ),
         );

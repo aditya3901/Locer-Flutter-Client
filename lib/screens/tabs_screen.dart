@@ -20,26 +20,80 @@ class _TabsScreenState extends State<TabsScreen> {
     fbm.requestPermission();
     // If app is on foreground
     FirebaseMessaging.onMessage.listen((message) {
-      // Show Dialog if app is Open
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
           content: ListTile(
-            title: Text("${message.notification?.title}"),
-            subtitle: Text("${message.notification?.body}"),
+            contentPadding: const EdgeInsets.all(0),
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                "${message.notification?.title}",
+                style: Theme.of(context).textTheme.headline1,
+              ),
+            ),
+            subtitle: Text(
+              "${message.notification?.body}",
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text("OK"),
+              child: const Text(
+                "Later",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                "OK",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),
       );
       return;
     });
-    // If app is in background or is terminated
+    // If app is in background
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: ListTile(
+            contentPadding: const EdgeInsets.all(0),
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                "${message.notification?.title}",
+                style: Theme.of(context).textTheme.headline1,
+              ),
+            ),
+            subtitle: Text(
+              "${message.notification?.body}",
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                "Later",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                "OK",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
       return;
     });
   }
