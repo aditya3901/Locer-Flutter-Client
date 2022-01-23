@@ -109,7 +109,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
-
   Widget formField(
       String label, IconData icon, TextEditingController controller) {
     return TextFormField(
@@ -213,30 +212,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 textAlign: TextAlign.start,
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: const [
-                                    Icon(Icons.payment),
-                                    SizedBox(width: 14),
-                                    Text(
-                                      "UPI/Cash On Delivery",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Checkbox(
-                                  value: isChecked,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      isChecked = val!;
-                                    });
-                                  },
-                                ),
-                              ],
+                            CheckboxListTile(
+                              contentPadding: const EdgeInsets.all(0),
+                              value: isChecked,
+                              onChanged: (val) {
+                                setState(() {
+                                  isChecked = val!;
+                                });
+                              },
+                              title: const Text(
+                                "UPI/Cash On Delivery",
+                                style: TextStyle(fontSize: 18),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 8, bottom: 8),

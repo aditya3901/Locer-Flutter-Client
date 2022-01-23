@@ -12,7 +12,7 @@ class CategoryRow extends StatelessWidget {
       child: Row(
         children: [
           CategoryItem(
-            title: "Beverages",
+            title: "Drinks",
             icon: Icons.emoji_food_beverage,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_) {
