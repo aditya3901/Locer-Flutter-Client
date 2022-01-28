@@ -44,9 +44,11 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
       for (var order in orders) {
         if (order["isAccepted"] == true) {
           _ordersListAccepted.add(order);
-        } else if (order["isShipped"] == true) {
+        } 
+        if (order["isShipped"] == true) {
           _ordersListShipped.add(order);
-        } else if (order["isDelivered"] == true) {
+        } 
+        if (order["isDelivered"] == true) {
           _ordersListDelivered.add(order);
         }
       }
@@ -57,7 +59,6 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
       setState(() {
         _isLoading = false;
       });
-      print(e);
     }
   }
 

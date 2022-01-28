@@ -53,6 +53,17 @@ class MainDrawer extends StatelessWidget {
               Icons.hotel,
               () {
                 Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text("Coming Soon.."),
+                    duration: const Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: "Dismiss",
+                      onPressed:
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar,
+                    ),
+                  ),
+                );
               },
             ),
             drawerItem(
@@ -70,6 +81,17 @@ class MainDrawer extends StatelessWidget {
               Icons.track_changes,
               () {
                 Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text("Coming Soon.."),
+                    duration: const Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: "Dismiss",
+                      onPressed:
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar,
+                    ),
+                  ),
+                );
               },
             ),
             const Divider(thickness: 1),

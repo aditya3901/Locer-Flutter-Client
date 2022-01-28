@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:locer/screens/navBar_screens/cart_screen.dart';
-import 'package:locer/screens/tabs_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class OrderConfirmed extends StatelessWidget {

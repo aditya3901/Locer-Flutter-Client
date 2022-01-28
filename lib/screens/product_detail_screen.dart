@@ -68,6 +68,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Text("Item added to cart."),
+              duration: const Duration(seconds: 2),
               action: SnackBarAction(
                 label: "Dismiss",
                 onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
@@ -83,6 +84,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Text("Already exist in cart."),
+              duration: const Duration(seconds: 2),
               action: SnackBarAction(
                 label: "Dismiss",
                 onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
