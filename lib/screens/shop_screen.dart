@@ -152,6 +152,7 @@ class _ShopScreenState extends State<ShopScreen> {
             height: 220,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
               itemBuilder: (ctx, index) {
                 return ProductItem(items[index]);
               },
