@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/your_orders_screen.dart';
@@ -34,10 +35,10 @@ class MainDrawer extends StatelessWidget {
           children: [
             DrawerHeader(
               child: Center(
-                child: Image.asset(
-                  "assets/images/driver.png",
-                  width: 100,
-                  height: 100,
+                child: SvgPicture.asset(
+                  "assets/images/logo.svg",
+                  width: 60,
+                  height: 60,
                 ),
               ),
             ),

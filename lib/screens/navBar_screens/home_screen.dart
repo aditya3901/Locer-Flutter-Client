@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/utils/models/store_model.dart';
@@ -111,9 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          "assets/images/driver.png",
-          height: 45,
+        title: SvgPicture.asset(
+          "assets/images/logo.svg",
+          height: 35,
         ),
         centerTitle: true,
         actions: [

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:locer/screens/auth_screens/login_screen.dart';
 import 'package:locer/screens/tabs_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -35,10 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset(
-          "assets/images/driver.png",
-          height: 200,
-          width: 200,
+        child: SvgPicture.asset(
+          "assets/images/logo.svg",
+          height: 100,
+          width: 100,
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/product_detail_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
@@ -135,9 +136,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          "assets/images/driver.png",
-          height: 45,
+        title: SvgPicture.asset(
+          "assets/images/logo.svg",
+          height: 35,
         ),
         actions: [
           IconButton(

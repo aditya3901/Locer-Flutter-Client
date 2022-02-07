@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:locer/utils/db/products_database.dart';
 import 'package:locer/utils/models/cart_item_model.dart';
 import 'package:locer/utils/models/child_model.dart';
@@ -155,9 +156,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Image.asset(
-          "assets/images/driver.png",
-          height: 45,
+        title: SvgPicture.asset(
+          "assets/images/logo.svg",
+          height: 35,
         ),
       ),
       body: ModalProgressHUD(
