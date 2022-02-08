@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:locer/screens/navBar_screens/cart_screen.dart';
 import 'package:lottie/lottie.dart';
 
@@ -7,8 +8,8 @@ class OrderConfirmed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          "assets/images/driver.png",
+        title: SvgPicture.asset(
+          "assets/images/logo.svg",
           height: 45,
         ),
         centerTitle: true,
