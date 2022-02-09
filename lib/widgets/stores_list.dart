@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:locer/providers/theme_provider.dart';
 import 'package:locer/screens/shop_screen.dart';
 import 'package:locer/utils/networking.dart';
 import 'package:locer/utils/models/store_model.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StoresList extends StatefulWidget {
@@ -56,39 +58,101 @@ class _StoresListState extends State<StoresList> {
   @override
   Widget build(BuildContext context) {
     Widget storeItem(String title, String subtitle, String image, int index) {
-      return ListTile(
+      // return ListTile(
+      //   onTap: () {
+      //     Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+      //       return ShopScreen(title, index);
+      //     }));
+      //   },
+      //   leading: Card(
+      //     elevation: 3,
+      //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      //     child: ClipRRect(
+      //       child: FadeInImage(
+      //         fit: BoxFit.cover,
+      //         width: 58,
+      //         imageErrorBuilder: (context, error, stackTrace) => Image.network(
+      //           list[0].imageUrl,
+      //           width: 58,
+      //           fit: BoxFit.cover,
+      //         ),
+      //         placeholder: NetworkImage(list[0].imageUrl),
+      //         image: NetworkImage(image),
+      //       ),
+      //       borderRadius: BorderRadius.circular(8),
+      //     ),
+      //   ),
+      //   title: Text(
+      //     title,
+      //     overflow: TextOverflow.ellipsis,
+      //     style: const TextStyle(fontWeight: FontWeight.bold),
+      //   ),
+      //   subtitle: Text(subtitle),
+      //   trailing: IconButton(
+      //     onPressed: () {},
+      //     icon: const Icon(Icons.arrow_forward),
+      //   ),
+      // );
+      return InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
             return ShopScreen(title, index);
           }));
         },
-        leading: Card(
-          elevation: 3,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: ClipRRect(
-            child: FadeInImage(
-              fit: BoxFit.cover,
-              width: 58,
-              imageErrorBuilder: (context, error, stackTrace) => Image.network(
-                list[0].imageUrl,
-                width: 58,
-                fit: BoxFit.cover,
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Row(
+            children: [
+              Card(
+                elevation: 3,
+                margin: const EdgeInsets.only(
+                    top: 4, bottom: 4, left: 15, right: 20),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                child: ClipRRect(
+                  child: FadeInImage(
+                    fit: BoxFit.cover,
+                    width: 58,
+                    height: 58,
+                    imageErrorBuilder: (context, error, stackTrace) =>
+                        Image.asset(
+                      "assets/images/driver.png",
+                      width: 58,
+                      fit: BoxFit.contain,
+                    ),
+                    placeholder: const AssetImage("assets/images/driver.png"),
+                    image: NetworkImage(image),
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-              placeholder: NetworkImage(list[0].imageUrl),
-              image: NetworkImage(image),
-            ),
-            borderRadius: BorderRadius.circular(8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(subtitle),
+                ],
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.arrow_forward,
+                  color: Provider.of<ThemeProvider>(context).isDarkMode
+                      ? Colors.white
+                      : Colors.black54,
+                ),
+              ),
+            ],
           ),
-        ),
-        title: Text(
-          title,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(subtitle),
-        trailing: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.arrow_forward),
         ),
       );
     }

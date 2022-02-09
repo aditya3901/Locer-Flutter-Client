@@ -152,7 +152,7 @@ class _CartScreenState extends State<CartScreen> {
       appBar: AppBar(
         title: SvgPicture.asset(
           "assets/images/logo.svg",
-          height: 35,
+          height: 30,
         ),
         actions: [
           IconButton(

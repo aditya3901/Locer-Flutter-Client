@@ -138,7 +138,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
       appBar: AppBar(
         title: SvgPicture.asset(
           "assets/images/logo.svg",
-          height: 35,
+          height: 30,
         ),
         actions: [
           IconButton(

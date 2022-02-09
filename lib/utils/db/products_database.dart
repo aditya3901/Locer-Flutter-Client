@@ -36,6 +36,7 @@ class ProductsDatabase {
       ${ProductFields.title} $textType,
       ${ProductFields.description} $textType,
       ${ProductFields.price} $priceType,
+      ${ProductFields.discountedPrice} $priceType,
       ${ProductFields.imageUrl} $textType,
       ${ProductFields.isFavourite} $boolType,
       ${ProductFields.storeID} $textType

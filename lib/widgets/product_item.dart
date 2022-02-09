@@ -18,7 +18,7 @@ class _ProductItemState extends State<ProductItem> {
       margin: const EdgeInsets.only(
         top: 8,
         left: 8,
-        bottom: 6,
+        bottom: 4,
       ),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -55,13 +55,32 @@ class _ProductItemState extends State<ProductItem> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(top: 4, left: 8, right: 8, bottom: 4),
-                child: Text(
-                  "\u20B9${widget.item.price}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                    const EdgeInsets.only(top: 6, left: 8, right: 8, bottom: 2),
+                child: Row(
+                  children: [
+                    Text(
+                      "\u20B9${widget.item.discountedPrice}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Colors.green,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    const Text(
+                      "mrp. ",
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      "\u20B9${widget.item.price}",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(

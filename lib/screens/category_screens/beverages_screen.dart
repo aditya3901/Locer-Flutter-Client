@@ -50,7 +50,7 @@ class _BeveragesScreenState extends State<BeveragesScreen> {
           List<ChildModel> storeProducts = [];
           if (products != null && products != []) {
             for (var product in products) {
-              if (product["type"]
+              if (product["subType"]
                   .toString()
                   .toLowerCase()
                   .contains(subCat.toLowerCase())) {
@@ -58,10 +58,16 @@ class _BeveragesScreenState extends State<BeveragesScreen> {
                 var title = product["title"];
                 var desc = product["description"];
                 var price = product["price"];
+                int discountedPrice;
+                if(product["discountedPrice"] != null){
+                  discountedPrice = product["discountedPrice"];
+                }else{
+                  discountedPrice = product["price"];
+                }
                 var imgUrl =
                     "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
                 var item =
-                    ChildModel(id, title, desc, price, imgUrl, false, storeID);
+                    ChildModel(id, title, desc, price, discountedPrice, imgUrl, false, storeID);
                 storeProducts.add(item);
               }
             }

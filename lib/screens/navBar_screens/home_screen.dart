@@ -65,10 +65,20 @@ class _HomeScreenState extends State<HomeScreen> {
             var title = product["title"];
             var desc = product["description"];
             var price = product["price"];
+            int mrp;
+            if (product["mrp"] != null) {
+              mrp = product["mrp"];
+            } else {
+              mrp = product["price"];
+            }
             var imgUrl =
                 "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
+
+            // Temporary Description if desc is null
+            desc ??= "";
+            
             var item =
-                ChildModel(id, title, desc, price, imgUrl, false, storeID);
+                ChildModel(id, title, desc, price, mrp, imgUrl, false, storeID);
             searchItems.add(item); // For Searching over all Products
           }
         }
@@ -114,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: SvgPicture.asset(
           "assets/images/logo.svg",
-          height: 35,
+          height: 30,
         ),
         centerTitle: true,
         actions: [

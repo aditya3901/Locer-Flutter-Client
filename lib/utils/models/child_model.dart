@@ -6,6 +6,7 @@ class ProductFields {
     title,
     description,
     price,
+    discountedPrice,
     imageUrl,
     isFavourite,
     storeID
@@ -15,6 +16,7 @@ class ProductFields {
   static const String title = 'title';
   static const String description = 'description';
   static const String price = 'price';
+  static const String discountedPrice = 'discountedPrice';
   static const String imageUrl = 'imageUrl';
   static const String isFavourite = 'isFavourite';
   static const String storeID = "storeID";
@@ -25,6 +27,7 @@ class ChildModel {
   String title;
   String description;
   int price;
+  int discountedPrice;
   String imageUrl;
   bool isFavourite;
   String storeID;
@@ -34,6 +37,7 @@ class ChildModel {
     this.title,
     this.description,
     this.price,
+    this.discountedPrice,
     this.imageUrl,
     this.isFavourite,
     this.storeID,
@@ -44,6 +48,7 @@ class ChildModel {
         ProductFields.title: title,
         ProductFields.description: description,
         ProductFields.price: price,
+        ProductFields.discountedPrice: discountedPrice,
         ProductFields.imageUrl: imageUrl,
         ProductFields.isFavourite: isFavourite ? 1 : 0,
         ProductFields.storeID: storeID,
@@ -54,6 +59,7 @@ class ChildModel {
         json[ProductFields.title] as String,
         json[ProductFields.description] as String,
         json[ProductFields.price] as int,
+        json[ProductFields.discountedPrice] as int,
         json[ProductFields.imageUrl] as String,
         json[ProductFields.isFavourite] == 1,
         json[ProductFields.storeID] as String,

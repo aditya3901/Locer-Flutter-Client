@@ -43,7 +43,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     var item = CartItem(
       widget.productItem.id,
       widget.productItem.title,
-      widget.productItem.price * count,
+      widget.productItem.discountedPrice * count,
       widget.productItem.imageUrl,
       count,
       data["product"]["countInStock"],
@@ -158,7 +158,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         centerTitle: true,
         title: SvgPicture.asset(
           "assets/images/logo.svg",
-          height: 35,
+          height: 30,
         ),
       ),
       body: ModalProgressHUD(
@@ -235,6 +235,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             widget.productItem.title,
                             widget.productItem.description,
                             widget.productItem.price,
+                            widget.productItem.discountedPrice,
                             widget.productItem.imageUrl,
                             isFavourite,
                             widget.productItem.storeID,
@@ -264,13 +265,31 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(14),
-                child: Text(
-                  "\u20B9${widget.productItem.price}",
-                  style: const TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -2,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      "\u20B9${widget.productItem.discountedPrice}",
+                      style: const TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    const Text(
+                      "mrp. ",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      "\u20B9${widget.productItem.price}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Container(
