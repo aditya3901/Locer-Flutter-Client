@@ -25,7 +25,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
   final _pinController = TextEditingController();
-  final _phoneController = TextEditingController();
   bool isChecked = false;
   bool _isSending = false;
   double itemsCost = 0, shippingCost = 0, taxes = 0, totalCost = 0;
@@ -194,11 +193,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               _pinController,
                             ),
                             const SizedBox(height: 8),
-                            formField(
-                              "Phone",
-                              Icons.phone,
-                              _phoneController,
-                            ),
                             Padding(
                               padding: const EdgeInsets.only(top: 14),
                               child: Text(
