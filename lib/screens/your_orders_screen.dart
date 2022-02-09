@@ -14,6 +14,7 @@ class YourOrdersScreen extends StatefulWidget {
 }
 
 class _YourOrdersScreenState extends State<YourOrdersScreen> {
+  final List<Map<String, dynamic>> _ordersListPlaced = [];
   final List<Map<String, dynamic>> _ordersListAccepted = [];
   final List<Map<String, dynamic>> _ordersListShipped = [];
   final List<Map<String, dynamic>> _ordersListDelivered = [];
@@ -42,14 +43,20 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
       );
       var orders = jsonDecode(res.body);
       for (var order in orders) {
-        if (order["isAccepted"] == true) {
-          _ordersListAccepted.add(order);
-        } 
-        if (order["isShipped"] == true) {
-          _ordersListShipped.add(order);
-        } 
-        if (order["isDelivered"] == true) {
-          _ordersListDelivered.add(order);
+        if (order["isAccepted"] == false &&
+            order["isShipped"] == false &&
+            order["isDelivered"] == false) {
+          _ordersListPlaced.add(order);
+        } else {
+          if (order["isDelivered"] == true) {
+            _ordersListDelivered.add(order);
+          }
+          else if (order["isShipped"] == true) {
+            _ordersListShipped.add(order);
+          }
+          else if (order["isAccepted"] == true) {
+            _ordersListAccepted.add(order);
+          }
         }
       }
       setState(() {
@@ -72,7 +79,7 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -82,6 +89,16 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
           centerTitle: true,
           bottom: TabBar(
             tabs: [
+              Tab(
+                child: Text(
+                  "Placed",
+                  style: TextStyle(
+                    color: (themeProvider.isDarkMode == true)
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                ),
+              ),
               Tab(
                 child: Text(
                   "Accepted",
@@ -117,6 +134,7 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
         ),
         body: TabBarView(
           children: [
+            placed(),
             accepted(),
             shipped(),
             delivered(),
@@ -214,6 +232,23 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
         ),
       ),
     );
+  }
+
+  Widget placed() {
+    return (_isLoading)
+        ? const Center(
+            child: CupertinoActivityIndicator(radius: 18),
+          )
+        : (_ordersListPlaced.isEmpty)
+            ? const Center(
+                child: Text("No order placed yet"),
+              )
+            : ListView.builder(
+                itemBuilder: (context, index) {
+                  return orderItem(_ordersListPlaced[index]);
+                },
+                itemCount: _ordersListPlaced.length,
+              );
   }
 
   Widget accepted() {
