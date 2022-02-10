@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // Temporary Description if desc is null
             desc ??= "";
-            
+
             var item =
                 ChildModel(id, title, desc, price, mrp, imgUrl, false, storeID);
             searchItems.add(item); // For Searching over all Products
@@ -323,7 +323,7 @@ class CustomHomeSearchDelegate extends SearchDelegate {
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                               color:
-                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                  Provider.of<ThemeProvider>(context).darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                             ),
@@ -336,7 +336,7 @@ class CustomHomeSearchDelegate extends SearchDelegate {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Provider.of<ThemeProvider>(context)
-                                          .isDarkMode
+                                          .darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                                   fontSize: 16,
@@ -497,7 +497,7 @@ class CustomHomeSearchDelegate extends SearchDelegate {
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                               color:
-                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                  Provider.of<ThemeProvider>(context).darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                             ),
@@ -510,7 +510,7 @@ class CustomHomeSearchDelegate extends SearchDelegate {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Provider.of<ThemeProvider>(context)
-                                          .isDarkMode
+                                          .darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                                   fontSize: 16,

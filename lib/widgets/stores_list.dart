@@ -148,7 +148,7 @@ class _StoresListState extends State<StoresList> {
                 onPressed: () {},
                 icon: Icon(
                   Icons.arrow_forward,
-                  color: Provider.of<ThemeProvider>(context).isDarkMode
+                  color: Provider.of<ThemeProvider>(context).darkTheme
                       ? Colors.white
                       : Colors.black54,
                 ),

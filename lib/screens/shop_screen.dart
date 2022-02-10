@@ -149,7 +149,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Provider.of<ThemeProvider>(context).isDarkMode
+                      color: Provider.of<ThemeProvider>(context).darkTheme
                           ? Colors.white
                           : Colors.black54,
                     ),
@@ -297,7 +297,7 @@ class CustomSearchDelegate extends SearchDelegate {
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                               color:
-                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                  Provider.of<ThemeProvider>(context).darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                             ),
@@ -310,7 +310,7 @@ class CustomSearchDelegate extends SearchDelegate {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Provider.of<ThemeProvider>(context)
-                                          .isDarkMode
+                                          .darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                                   fontSize: 16,
@@ -405,7 +405,7 @@ class CustomSearchDelegate extends SearchDelegate {
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                               color:
-                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                  Provider.of<ThemeProvider>(context).darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                             ),
@@ -418,7 +418,7 @@ class CustomSearchDelegate extends SearchDelegate {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Provider.of<ThemeProvider>(context)
-                                          .isDarkMode
+                                          .darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                                   fontSize: 16,

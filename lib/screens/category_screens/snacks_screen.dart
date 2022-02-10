@@ -97,15 +97,12 @@ class _SnacksScreenState extends State<SnacksScreen> {
             style: Theme.of(context).textTheme.headline1,
           ),
           centerTitle: true,
-          bottom: PreferredSize(
-            child: TabBar(
-              labelColor: (themeProvider.isDarkMode == true)
-                  ? Colors.white
-                  : Colors.black,
-              isScrollable: true,
-              tabs: _subCats.map((item) => Tab(child: Text(item))).toList(),
-            ),
-            preferredSize: const Size.fromHeight(30),
+          bottom: TabBar(
+            labelColor: (themeProvider.darkTheme == true)
+                ? Colors.white
+                : Colors.black,
+            isScrollable: true,
+            tabs: _subCats.map((item) => Tab(child: Text(item))).toList(),
           ),
         ),
         body: allProducts.isNotEmpty

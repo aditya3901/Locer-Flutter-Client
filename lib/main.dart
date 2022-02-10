@@ -23,9 +23,7 @@ class MyApp extends StatelessWidget {
           final themeProvider = Provider.of<ThemeProvider>(context);
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            themeMode: themeProvider.themeMode,
-            theme: MyTheme.lightTheme,
-            darkTheme: MyTheme.darkTheme,
+            theme: themeProvider.darkTheme ? darkTheme : lightTheme,
             home: SplashScreen(),
             routes: {
               SignUpScreen.routeName: (context) => SignUpScreen(),

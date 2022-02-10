@@ -50,11 +50,9 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
         } else {
           if (order["isDelivered"] == true) {
             _ordersListDelivered.add(order);
-          }
-          else if (order["isShipped"] == true) {
+          } else if (order["isShipped"] == true) {
             _ordersListShipped.add(order);
-          }
-          else if (order["isAccepted"] == true) {
+          } else if (order["isAccepted"] == true) {
             _ordersListAccepted.add(order);
           }
         }
@@ -88,12 +86,13 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
           ),
           centerTitle: true,
           bottom: TabBar(
+            isScrollable: true,
             tabs: [
               Tab(
                 child: Text(
                   "Placed",
                   style: TextStyle(
-                    color: (themeProvider.isDarkMode == true)
+                    color: (themeProvider.darkTheme == true)
                         ? Colors.white
                         : Colors.black,
                   ),
@@ -103,7 +102,7 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
                 child: Text(
                   "Accepted",
                   style: TextStyle(
-                    color: (themeProvider.isDarkMode == true)
+                    color: (themeProvider.darkTheme == true)
                         ? Colors.white
                         : Colors.black,
                   ),
@@ -113,7 +112,7 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
                 child: Text(
                   "Shipped",
                   style: TextStyle(
-                    color: (themeProvider.isDarkMode == true)
+                    color: (themeProvider.darkTheme == true)
                         ? Colors.white
                         : Colors.black,
                   ),
@@ -123,7 +122,7 @@ class _YourOrdersScreenState extends State<YourOrdersScreen> {
                 child: Text(
                   "Delivered",
                   style: TextStyle(
-                    color: (themeProvider.isDarkMode == true)
+                    color: (themeProvider.darkTheme == true)
                         ? Colors.white
                         : Colors.black,
                   ),

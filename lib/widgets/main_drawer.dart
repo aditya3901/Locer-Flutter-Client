@@ -125,11 +125,11 @@ class MainDrawer extends StatelessWidget {
               ),
               leading: const Icon(Icons.dark_mode),
               trailing: CupertinoSwitch(
-                value: themeProvider.isDarkMode,
+                value: themeProvider.darkTheme,
                 onChanged: (value) {
                   final provider =
                       Provider.of<ThemeProvider>(context, listen: false);
-                  provider.toggleTheme(value);
+                  provider.toggleTheme();
                 },
               ),
             ),

@@ -77,7 +77,7 @@ class _CartScreenState extends State<CartScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
-                          color: Provider.of<ThemeProvider>(context).isDarkMode
+                          color: Provider.of<ThemeProvider>(context).darkTheme
                               ? Colors.white
                               : Colors.black54,
                         ),
@@ -91,7 +91,7 @@ class _CartScreenState extends State<CartScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color:
-                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                  Provider.of<ThemeProvider>(context).darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                               fontSize: 16,

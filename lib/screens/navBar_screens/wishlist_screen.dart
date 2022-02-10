@@ -86,7 +86,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                               color:
-                                  Provider.of<ThemeProvider>(context).isDarkMode
+                                  Provider.of<ThemeProvider>(context).darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                             ),
@@ -100,7 +100,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Provider.of<ThemeProvider>(context)
-                                          .isDarkMode
+                                          .darkTheme
                                       ? Colors.white
                                       : Colors.black54,
                                   fontSize: 16,

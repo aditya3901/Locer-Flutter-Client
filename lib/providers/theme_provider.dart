@@ -1,48 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode themeMode = ThemeMode.light;
+  final String key = "theme";
+  late bool _isDarkMode;
 
-  bool get isDarkMode => themeMode == ThemeMode.dark;
+  bool get darkTheme => _isDarkMode;
 
-  void toggleTheme(bool isOn) {
-    themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
+  ThemeProvider() {
+    _isDarkMode = false;
+    _loadFromPref();
+  }
+
+  void toggleTheme() {
+    _isDarkMode = !_isDarkMode;
+    _saveToPref();
     notifyListeners();
+  }
+
+  _loadFromPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    _isDarkMode = prefs.getBool(key) ?? false;
+    notifyListeners();
+  }
+
+  _saveToPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, _isDarkMode);
   }
 }
 
-class MyTheme {
-  static final lightTheme = ThemeData(
-    primarySwatch: Colors.green,
-    appBarTheme: const AppBarTheme(
-      elevation: 0,
-      backgroundColor: Color(0xFFFAFAFA),
-      foregroundColor: Colors.black,
+ThemeData lightTheme = ThemeData(
+  primarySwatch: Colors.green,
+  appBarTheme: const AppBarTheme(
+    elevation: 0,
+    backgroundColor: Color(0xFFFAFAFA),
+    foregroundColor: Colors.black,
+  ),
+  fontFamily: GoogleFonts.robotoSlab().fontFamily,
+  textTheme: const TextTheme(
+    headline1: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
     ),
-    fontFamily: GoogleFonts.robotoSlab().fontFamily,
-    textTheme: const TextTheme(
-      headline1: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
-      ),
-    ),
-  );
+  ),
+);
 
-  static final darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    fontFamily: GoogleFonts.robotoSlab().fontFamily,
-    appBarTheme: const AppBarTheme(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
+ThemeData darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  fontFamily: GoogleFonts.robotoSlab().fontFamily,
+  appBarTheme: const AppBarTheme(
+    elevation: 0,
+    backgroundColor: Colors.transparent,
+  ),
+  textTheme: const TextTheme(
+    headline1: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
     ),
-    textTheme: const TextTheme(
-      headline1: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-    ),
-  );
-}
+  ),
+);
