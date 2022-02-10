@@ -75,6 +75,7 @@ class CategoryItem extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
               title,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),

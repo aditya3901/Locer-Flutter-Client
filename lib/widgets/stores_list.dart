@@ -112,12 +112,12 @@ class _StoresListState extends State<StoresList> {
                 child: ClipRRect(
                   child: FadeInImage(
                     fit: BoxFit.cover,
-                    width: 58,
-                    height: 58,
+                    width: 56,
+                    height: 56,
                     imageErrorBuilder: (context, error, stackTrace) =>
                         Image.asset(
                       "assets/images/driver.png",
-                      width: 58,
+                      width: 56,
                       fit: BoxFit.contain,
                     ),
                     placeholder: const AssetImage("assets/images/driver.png"),
@@ -126,22 +126,24 @@ class _StoresListState extends State<StoresList> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  Text(subtitle),
-                ],
+                    Text(subtitle, maxLines: 1),
+                  ],
+                ),
               ),
-              const Spacer(),
               IconButton(
                 onPressed: () {},
                 icon: Icon(

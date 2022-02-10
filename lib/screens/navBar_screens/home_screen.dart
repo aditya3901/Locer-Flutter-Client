@@ -168,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 8),
             child: Text(
-              "Hi, $username!",
+              username.isNotEmpty ? "Hi, $username!" : "Hi, Buddy!",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline1,
             ),
