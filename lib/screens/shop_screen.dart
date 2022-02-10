@@ -42,6 +42,7 @@ class _ShopScreenState extends State<ShopScreen> {
       var products = store["products"];
       for (var product in products) {
         var type = product["type"];
+        var countInStock = product["countInStock"];
         var id = product["_id"];
         var title = product["title"];
         var desc = product["description"];
@@ -55,11 +56,8 @@ class _ShopScreenState extends State<ShopScreen> {
         var imgUrl =
             "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
 
-        // Temporary Description if desc is null
-        desc ??= "";
-
         var item = ChildModel(
-            id, title, desc, price, discountedPrice, imgUrl, false, storeID);
+           countInStock, id, title, desc, price, discountedPrice, imgUrl, false, storeID);
         searchItems.add(item); // For Searching over all Products
         if (map.containsKey(type)) {
           map[type]?.add(item);

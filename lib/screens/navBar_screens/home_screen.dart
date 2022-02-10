@@ -61,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         var products = store["products"];
         if (products != null && products != []) {
           for (var product in products) {
+            var countInStock = product["countInStock"];
             var id = product["_id"];
             var title = product["title"];
             var desc = product["description"];
@@ -78,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
             desc ??= "";
 
             var item =
-                ChildModel(id, title, desc, price, mrp, imgUrl, false, storeID);
+                ChildModel(countInStock, id, title, desc, price, mrp, imgUrl, false, storeID);
             searchItems.add(item); // For Searching over all Products
           }
         }

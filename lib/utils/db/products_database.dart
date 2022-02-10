@@ -32,6 +32,7 @@ class ProductsDatabase {
 
     await db.execute('''
     CREATE TABLE $tableWishlist (
+      ${ProductFields.countInStock} $priceType,
       ${ProductFields.id} $idType,
       ${ProductFields.title} $textType,
       ${ProductFields.description} $textType,

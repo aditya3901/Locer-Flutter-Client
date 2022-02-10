@@ -2,6 +2,7 @@ const String tableWishlist = 'wishlist';
 
 class ProductFields {
   static const List<String> values = [
+    countInStock,
     id,
     title,
     description,
@@ -12,6 +13,7 @@ class ProductFields {
     storeID
   ];
 
+  static const String countInStock = 'countInStock';
   static const String id = '_id';
   static const String title = 'title';
   static const String description = 'description';
@@ -23,6 +25,7 @@ class ProductFields {
 }
 
 class ChildModel {
+  int countInStock;
   String id;
   String title;
   String description;
@@ -33,6 +36,7 @@ class ChildModel {
   String storeID;
 
   ChildModel(
+    this.countInStock,
     this.id,
     this.title,
     this.description,
@@ -44,6 +48,7 @@ class ChildModel {
   );
 
   Map<String, Object?> toJson() => {
+        ProductFields.countInStock: countInStock,
         ProductFields.id: id,
         ProductFields.title: title,
         ProductFields.description: description,
@@ -55,6 +60,7 @@ class ChildModel {
       };
 
   static ChildModel fromJson(Map<String, Object?> json) => ChildModel(
+        json[ProductFields.countInStock] as int,
         json[ProductFields.id] as String,
         json[ProductFields.title] as String,
         json[ProductFields.description] as String,

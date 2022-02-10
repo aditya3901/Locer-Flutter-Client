@@ -56,6 +56,7 @@ class _StaplesScreenState extends State<StaplesScreen> {
                   .toString()
                   .toLowerCase()
                   .contains(subCat.toLowerCase())) {
+                var countInStock = product["countInStock"];
                 var id = product["_id"];
                 var title = product["title"];
                 var desc = product["description"];
@@ -69,7 +70,7 @@ class _StaplesScreenState extends State<StaplesScreen> {
                 var imgUrl =
                     "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
                 var item =
-                    ChildModel(id, title, desc, price, discountedPrice, imgUrl, false, storeID);
+                    ChildModel(countInStock, id, title, desc, price, discountedPrice, imgUrl, false, storeID);
                 storeProducts.add(item);
               }
             }

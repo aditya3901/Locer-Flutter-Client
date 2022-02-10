@@ -29,65 +29,86 @@ class _ProductItemState extends State<ProductItem> {
               return ProductDetailScreen(widget.item);
             }));
           },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Stack(
+            alignment: Alignment.topRight,
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 4, left: 6, right: 6),
-                  child: FadeInImage(
-                    placeholder: const AssetImage("assets/images/driver.png"),
-                    image: NetworkImage(widget.item.imageUrl),
-                    imageErrorBuilder: (context, error, stackTrace) =>
-                        Image.asset(
-                      "assets/images/driver.png",
-                      height: 112,
-                      fit: BoxFit.contain,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
                     ),
-                    fit: BoxFit.contain,
-                    height: 112,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4, left: 6, right: 6),
+                      child: FadeInImage(
+                        placeholder:
+                            const AssetImage("assets/images/driver.png"),
+                        image: NetworkImage(widget.item.imageUrl),
+                        imageErrorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          "assets/images/driver.png",
+                          height: 112,
+                          fit: BoxFit.contain,
+                        ),
+                        fit: BoxFit.contain,
+                        height: 112,
+                      ),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 6, left: 8, right: 8, bottom: 2),
+                    child: Row(
+                      children: [
+                        Text(
+                          "\u20B9${widget.item.discountedPrice}",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.green,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        const Text(
+                          "mrp. ",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        Text(
+                          "\u20B9${widget.item.price}",
+                          style: const TextStyle(
+                            fontSize: 14,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      widget.item.title,
+                      maxLines: 2,
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 6, left: 8, right: 8, bottom: 2),
-                child: Row(
-                  children: [
-                    Text(
-                      "\u20B9${widget.item.discountedPrice}",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Colors.green,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    const Text(
-                      "mrp. ",
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                    Text(
-                      "\u20B9${widget.item.price}",
-                      style: const TextStyle(
-                        fontSize: 14,
-                        decoration: TextDecoration.lineThrough,
-                      ),
-                    ),
-                  ],
+              Card(
+                elevation: 8,
+                margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  widget.item.title,
-                  maxLines: 2,
+                child: IconButton(
+                  iconSize: 22,
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.favorite_outline,
+                    color: Colors.green,
+                  ),
                 ),
               ),
             ],

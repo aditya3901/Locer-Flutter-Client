@@ -231,6 +231,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         if (isFavourite == false) {
                           isFavourite = true;
                           final item = ChildModel(
+                            widget.productItem.countInStock,
                             widget.productItem.id,
                             widget.productItem.title,
                             widget.productItem.description,
@@ -347,7 +348,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         child: IconButton(
                           onPressed: () {
                             setState(() {
-                              count++;
+                              if(count < widget.productItem.countInStock){
+                                count++;
+                              }
                             });
                           },
                           icon: const Icon(Icons.add),
