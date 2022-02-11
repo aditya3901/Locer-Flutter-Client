@@ -80,7 +80,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final email = googleUser.email;
       final response = await http.post(
         Uri.parse(_registerUrl),
-        body: {"name": name, "email": email, "password": "123", "mobileNum": "0"},
+        body: {
+          "name": name,
+          "email": email,
+          "password": "123",
+          "mobileNum": "0"
+        },
       );
       final jsonData = jsonDecode(response.body);
       if (jsonData["message"] == "User already exists") {
@@ -215,7 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 14),
                         TextFormField(
                           controller: _phoneController,
                           decoration: const InputDecoration(

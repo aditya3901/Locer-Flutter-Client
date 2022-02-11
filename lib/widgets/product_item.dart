@@ -46,7 +46,11 @@ class _ProductItemState extends State<ProductItem> {
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
               return ProductDetailScreen(widget.item);
-            }));
+            })).then((value) {
+              setState(() {
+                isFavourite = value;
+              });
+            });
           },
           child: Stack(
             alignment: Alignment.topRight,
