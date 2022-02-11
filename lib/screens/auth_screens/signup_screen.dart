@@ -22,6 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   bool _secureText = true;
   bool _showSpinner = false;
@@ -44,6 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               _usernameController.text,
               _emailController.text,
               _passwordController.text,
+              _phoneController.text,
             );
           }));
         }
@@ -78,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final email = googleUser.email;
       final response = await http.post(
         Uri.parse(_registerUrl),
-        body: {"name": name, "email": email, "password": "123"},
+        body: {"name": name, "email": email, "password": "123", "mobileNum": "0"},
       );
       final jsonData = jsonDecode(response.body);
       if (jsonData["message"] == "User already exists") {
@@ -209,6 +211,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               return "Password required";
                             } else if (value.length < 6) {
                               return "Password must be of atleast 6 characters";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 30),
+                        TextFormField(
+                          controller: _phoneController,
+                          decoration: const InputDecoration(
+                            labelText: "Phone",
+                            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                            border: OutlineInputBorder(),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Phone required";
                             }
                             return null;
                           },

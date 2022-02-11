@@ -65,6 +65,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         }
         var body = {
           "user": user.id,
+          "userMobileNum": user.phone,
           "orderItems": items,
           "shippingAddress": {
             "address": _addressController.text,

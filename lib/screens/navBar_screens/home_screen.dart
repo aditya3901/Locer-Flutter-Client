@@ -78,8 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
             // Temporary Description if desc is null
             desc ??= "";
 
-            var item =
-                ChildModel(countInStock, id, title, desc, price, mrp, imgUrl, false, storeID);
+            var item = ChildModel(countInStock, id, title, desc, price, mrp,
+                imgUrl, false, storeID);
             searchItems.add(item); // For Searching over all Products
           }
         }

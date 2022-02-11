@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:locer/screens/product_detail_screen.dart';
+import 'package:locer/utils/db/products_database.dart';
 import 'package:locer/utils/models/child_model.dart';
 
 class ProductItem extends StatefulWidget {
@@ -11,6 +12,24 @@ class ProductItem extends StatefulWidget {
 }
 
 class _ProductItemState extends State<ProductItem> {
+  bool isFavourite = false;
+
+  void _getData() async {
+    ChildModel? item =
+        await ProductsDatabase.instance.readProduct(widget.item.id);
+    if (item != null) {
+      setState(() {
+        isFavourite = item.isFavourite;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -104,11 +123,36 @@ class _ProductItemState extends State<ProductItem> {
                 ),
                 child: IconButton(
                   iconSize: 22,
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.favorite_outline,
-                    color: Colors.green,
-                  ),
+                  onPressed: () async {
+                    if (isFavourite == false) {
+                      isFavourite = true;
+                      final item = ChildModel(
+                        widget.item.countInStock,
+                        widget.item.id,
+                        widget.item.title,
+                        widget.item.description,
+                        widget.item.price,
+                        widget.item.discountedPrice,
+                        widget.item.imageUrl,
+                        isFavourite,
+                        widget.item.storeID,
+                      );
+                      await ProductsDatabase.instance.create(item);
+                    } else if (isFavourite == true) {
+                      isFavourite = false;
+                      await ProductsDatabase.instance.delete(widget.item.id);
+                    }
+                    setState(() {});
+                  },
+                  icon: isFavourite
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.green,
+                        )
+                      : const Icon(
+                          Icons.favorite_outline,
+                          color: Colors.green,
+                        ),
                 ),
               ),
             ],

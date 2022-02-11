@@ -12,8 +12,8 @@ const String _registerUrl =
     "https://locerappdemo.herokuapp.com/api/users/register";
 
 class VerifyEmailScreen extends StatefulWidget {
-  final String username, email, password;
-  VerifyEmailScreen(this.username, this.email, this.password);
+  final String username, email, password, phone;
+  VerifyEmailScreen(this.username, this.email, this.password, this.phone);
 
   @override
   State<VerifyEmailScreen> createState() => _VerifyEmailScreenState();
@@ -76,7 +76,8 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
           body: {
             "name": widget.username,
             "email": widget.email,
-            "password": widget.password
+            "password": widget.password,
+            "mobileNum": widget.phone
           },
         );
         final jsonData = jsonDecode(response.body);
