@@ -28,6 +28,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   bool isChecked = false;
   bool _isSending = false;
   double itemsCost = 0, shippingCost = 0, taxes = 0, totalCost = 0;
+  final TextEditingController _phoneController = TextEditingController();
 
   @override
   void initState() {
@@ -52,6 +53,56 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return user;
   }
 
+  Future<String?> openDialog() => showDialog<String>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: const Text("Enter your phone"),
+          content: TextField(
+            autofocus: true,
+            decoration: const InputDecoration(
+              hintText: "9876543210",
+            ),
+            controller: _phoneController,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (_phoneController.text.isNotEmpty) {
+                  Navigator.of(context).pop(_phoneController.text);
+                }
+              },
+              child: const Text("SUBMIT"),
+            ),
+          ],
+        ),
+      );
+
+  Future<bool> _checkPhone(User user) async {
+    int phoneNum = int.parse(user.phone!);
+    if (phoneNum > 5999999999 && phoneNum <= 9999999999) {
+      return true;
+    } else {
+      final retPhone = await openDialog();
+      int phone = int.parse(retPhone!);
+      if (phone > 5999999999 && phone <= 9999999999) {
+        user.phone = retPhone;
+        return true;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Invalid Phone Number"),
+          duration: const Duration(seconds: 2),
+          action: SnackBarAction(
+            label: "Dismiss",
+            onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
+          ),
+        ),
+      );
+      return false;
+    }
+  }
+
   void validate() async {
     if (formKey.currentState!.validate()) {
       setState(() {
@@ -59,47 +110,55 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       });
       try {
         User user = await getUserData();
-        var items = [];
-        for (var item in widget.cart) {
-          items.add(item.toJson());
+        // Check If Phone Number is Present
+        bool isPresent = await _checkPhone(user);
+        if (isPresent) {
+          var items = [];
+          for (var item in widget.cart) {
+            items.add(item.toJson());
+          }
+          var body = {
+            "user": user.id,
+            "userMobileNum": user.phone,
+            "orderItems": items,
+            "shippingAddress": {
+              "address": _addressController.text,
+              "city": _cityController.text,
+              "state": _stateController.text,
+              "postalCode": _pinController.text,
+              "country": "India"
+            },
+            "itemsPrice": itemsCost,
+            "shippingPrice": shippingCost,
+            "taxPrice": taxes,
+            "totalPrice": totalCost,
+            "paymentMethod": "UPI"
+          };
+          final response = await http.post(
+            Uri.parse(_cartUrl),
+            headers: {
+              HttpHeaders.contentTypeHeader: "application/json",
+              HttpHeaders.authorizationHeader: "Bearer ${user.token}"
+            },
+            body: jsonEncode(body),
+          );
+          await ProductsDatabase.instance.clearCartTable();
+          setState(() {
+            _isSending = false;
+          });
+          print(response.body);
+          // Send to Order Completion Page
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (ctx) {
+              return OrderConfirmed();
+            }),
+            (Route route) => false,
+          );
+        } else {
+          setState(() {
+            _isSending = false;
+          });
         }
-        var body = {
-          "user": user.id,
-          "userMobileNum": user.phone,
-          "orderItems": items,
-          "shippingAddress": {
-            "address": _addressController.text,
-            "city": _cityController.text,
-            "state": _stateController.text,
-            "postalCode": _pinController.text,
-            "country": "India"
-          },
-          "itemsPrice": itemsCost,
-          "shippingPrice": shippingCost,
-          "taxPrice": taxes,
-          "totalPrice": totalCost,
-          "paymentMethod": "UPI"
-        };
-        final response = await http.post(
-          Uri.parse(_cartUrl),
-          headers: {
-            HttpHeaders.contentTypeHeader: "application/json",
-            HttpHeaders.authorizationHeader: "Bearer ${user.token}"
-          },
-          body: jsonEncode(body),
-        );
-        await ProductsDatabase.instance.clearCartTable();
-        setState(() {
-          _isSending = false;
-        });
-        // print(response.body);
-        // Send to Order Completion Page
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (ctx) {
-            return OrderConfirmed();
-          }),
-          (Route route) => false,
-        );
       } catch (e) {
         // print(e);
         setState(() {
