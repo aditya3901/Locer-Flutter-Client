@@ -26,10 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final _pinController = TextEditingController();
   int activeIndex = 0;
   final urlImages = [
-    "https://pbs.twimg.com/media/DfFB1BOUcAAR1op.png",
-    "https://cdn.grabon.in/gograbon/images/web-images/uploads/1618575517942/food-coupons.jpg",
-    "https://www.dineout.co.in/blog/wp-content/uploads/2018/10/WhatsApp-Image-2018-10-18-at-8.06.23-PM.jpeg",
-    "https://www.shopickr.com/wp-content/uploads/2017/08/foodpanda-freedom-sale-independence-day-offers-2017.jpg",
+    "assets/images/carousel_image1.jpg",
+    "assets/images/carousel_image2.png",
+    "assets/images/carousel_image3.jpeg",
+    "assets/images/carousel_image4.jpeg",
   ];
   List<ChildModel> searchItems = [];
   List<StoreModel> searchShops = [];
@@ -223,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildImage(String image, int index) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: Image.network(
+      child: Image.asset(
         image,
         width: double.infinity,
         fit: BoxFit.fill,
