@@ -45,19 +45,20 @@ class _ShopScreenState extends State<ShopScreen> {
         var countInStock = product["countInStock"];
         var id = product["_id"];
         var title = product["title"];
-        var desc = product["description"];
+        var desc = product["description"] ?? "";
         var price = product["price"];
+        var dp = product["discountedPrice"] ?? product["price"];
         int discountedPrice;
-        if (product["discountedPrice"] != null) {
-          discountedPrice = product["discountedPrice"];
+        if (dp is int) {
+          discountedPrice = dp;
         } else {
-          discountedPrice = product["price"];
+          double d = dp;
+          discountedPrice = d.toInt();
         }
         var imgUrl =
             "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
-
-        var item = ChildModel(
-           countInStock, id, title, desc, price, discountedPrice, imgUrl, false, storeID);
+        var item = ChildModel(countInStock, id, title, desc, price,
+            discountedPrice, imgUrl, false, storeID);
         searchItems.add(item); // For Searching over all Products
         if (map.containsKey(type)) {
           map[type]?.add(item);

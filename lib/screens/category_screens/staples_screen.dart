@@ -59,13 +59,15 @@ class _StaplesScreenState extends State<StaplesScreen> {
                 var countInStock = product["countInStock"];
                 var id = product["_id"];
                 var title = product["title"];
-                var desc = product["description"];
+                var desc = product["description"] ?? "";
                 var price = product["price"];
                 int discountedPrice;
-                if(product["discountedPrice"] != null){
-                  discountedPrice = product["discountedPrice"];
-                }else{
-                  discountedPrice = product["price"];
+                var dp = product["discountedPrice"] ?? product["price"];
+                if (dp is int) {
+                  discountedPrice = dp;
+                } else {
+                  double d = dp;
+                  discountedPrice = d.toInt();
                 }
                 var imgUrl =
                     "https://res.cloudinary.com/locer/image/upload/v1629819047/locer/products/${product["filename"]}";
@@ -109,6 +111,7 @@ class _StaplesScreenState extends State<StaplesScreen> {
                 children: allProducts.map((item) {
                   var stores = item.keys.toList();
                   return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: (_, index) {
                       return CategoryShopItem(
                           stores[index], item[stores[index]]!);

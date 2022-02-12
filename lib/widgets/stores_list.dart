@@ -58,41 +58,6 @@ class _StoresListState extends State<StoresList> {
   @override
   Widget build(BuildContext context) {
     Widget storeItem(String title, String subtitle, String image, int index) {
-      // return ListTile(
-      //   onTap: () {
-      //     Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-      //       return ShopScreen(title, index);
-      //     }));
-      //   },
-      //   leading: Card(
-      //     elevation: 3,
-      //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      //     child: ClipRRect(
-      //       child: FadeInImage(
-      //         fit: BoxFit.cover,
-      //         width: 58,
-      //         imageErrorBuilder: (context, error, stackTrace) => Image.network(
-      //           list[0].imageUrl,
-      //           width: 58,
-      //           fit: BoxFit.cover,
-      //         ),
-      //         placeholder: NetworkImage(list[0].imageUrl),
-      //         image: NetworkImage(image),
-      //       ),
-      //       borderRadius: BorderRadius.circular(8),
-      //     ),
-      //   ),
-      //   title: Text(
-      //     title,
-      //     overflow: TextOverflow.ellipsis,
-      //     style: const TextStyle(fontWeight: FontWeight.bold),
-      //   ),
-      //   subtitle: Text(subtitle),
-      //   trailing: IconButton(
-      //     onPressed: () {},
-      //     icon: const Icon(Icons.arrow_forward),
-      //   ),
-      // );
       return InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {

@@ -107,7 +107,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                 ),
                               ),
                               Text(
-                                "${item.price}",
+                                "${item.discountedPrice}",
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

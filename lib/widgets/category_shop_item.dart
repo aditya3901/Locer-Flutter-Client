@@ -79,6 +79,7 @@ class CategoryShopItem extends StatelessWidget {
         SizedBox(
           height: 220,
           child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             itemBuilder: (ctx, index) {
               return ProductItem(items[index]);

@@ -378,12 +378,12 @@ class CustomHomeSearchDelegate extends SearchDelegate {
             child: FadeInImage(
               fit: BoxFit.cover,
               width: 58,
-              imageErrorBuilder: (context, error, stackTrace) => Image.network(
-                searchShops[0].imageUrl,
+              imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                "assets/images/driver.png",
                 width: 58,
                 fit: BoxFit.cover,
               ),
-              placeholder: NetworkImage(searchShops[0].imageUrl),
+              placeholder: const AssetImage("assets/images/driver.png"),
               image: NetworkImage(store.imageUrl),
             ),
             borderRadius: BorderRadius.circular(8),
@@ -552,13 +552,13 @@ class CustomHomeSearchDelegate extends SearchDelegate {
             child: FadeInImage(
               fit: BoxFit.cover,
               width: 58,
-              imageErrorBuilder: (context, error, stackTrace) => Image.network(
-                searchShops[0].imageUrl,
+              imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                "assets/images/driver.png",
                 width: 58,
                 fit: BoxFit.cover,
               ),
-              placeholder: NetworkImage(searchShops[0].imageUrl),
               image: NetworkImage(store.imageUrl),
+              placeholder: const AssetImage("assets/images/driver.png"),
             ),
             borderRadius: BorderRadius.circular(8),
           ),
