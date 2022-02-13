@@ -1,7 +1,7 @@
 # locer
 
-![](https://github.com/aditya3901/aditya3901/blob/main/AppScreenshot.png)<br><br>
-![](https://github.com/aditya3901/aditya3901/blob/main/AppScreenshot_2.png)
+|![](https://github.com/aditya3901/aditya3901/blob/main/Locer-Demo-Pics/image1.jpeg)|![](https://github.com/aditya3901/aditya3901/blob/main/Locer-Demo-Pics/image2.jpeg)|![](https://github.com/aditya3901/aditya3901/blob/main/Locer-Demo-Pics/image3.jpeg)|![](https://github.com/aditya3901/aditya3901/blob/main/Locer-Demo-Pics/image4.jpeg)|![](https://github.com/aditya3901/aditya3901/blob/main/Locer-Demo-Pics/image5.jpeg)|
+|-|-|-|-|-|
 
 ## Getting Started
 
