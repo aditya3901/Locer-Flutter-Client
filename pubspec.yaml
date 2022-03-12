@@ -50,6 +50,8 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2 # Persistent Bottom NavBar
   shimmer: ^2.0.0 # Shimmer Effect 
   flutter_svg: ^1.0.3 # Flutter SVG 
+  geolocator: 
+  geocoding: 
 
 dev_dependencies:
   flutter_test:
