@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../screens.dart';
 import 'package:locer/providers/theme_provider.dart';
-import 'package:locer/utils/models/child_model.dart';
-import 'package:locer/utils/models/store_model.dart';
-import 'package:locer/utils/models/user_model.dart';
+import '../../utils/models/models.dart';
 import 'package:locer/utils/networking.dart';
 import 'package:locer/widgets/category_row.dart';
 import 'package:locer/widgets/main_drawer.dart';
@@ -13,8 +12,6 @@ import 'package:locer/widgets/stores_list.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../product_detail_screen.dart';
-import '../shop_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -27,9 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int activeIndex = 0;
   final urlImages = [
     "assets/images/carousel_image1.jpg",
-    "assets/images/carousel_image2.png",
-    "assets/images/carousel_image3.jpeg",
-    "assets/images/carousel_image4.jpeg",
+    "assets/images/carousel_image1.jpg",
+    "assets/images/carousel_image1.jpg",
+    "assets/images/carousel_image1.jpg",
   ];
   List<ChildModel> searchItems = [];
   List<StoreModel> searchShops = [];

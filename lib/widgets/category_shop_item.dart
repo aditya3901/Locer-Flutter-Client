@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:locer/utils/models/child_model.dart';
-import 'package:locer/utils/models/store_model.dart';
+import '../utils/models/models.dart';
 import 'package:locer/widgets/product_item.dart';
 
 class CategoryShopItem extends StatelessWidget {

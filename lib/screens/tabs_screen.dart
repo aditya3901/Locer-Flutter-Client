@@ -1,9 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:locer/screens/navBar_screens/cart_screen.dart';
-import 'package:locer/screens/navBar_screens/home_screen.dart';
-import 'package:locer/screens/navBar_screens/wishlist_screen.dart';
+import 'screens.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class TabsScreen extends StatefulWidget {

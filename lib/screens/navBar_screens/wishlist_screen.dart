@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:locer/providers/theme_provider.dart';
-import 'package:locer/screens/product_detail_screen.dart';
 import 'package:locer/utils/db/products_database.dart';
-import 'package:locer/utils/models/child_model.dart';
+import '../../utils/models/models.dart';
 import 'package:locer/widgets/main_drawer.dart';
 import 'package:provider/provider.dart';
+import '../screens.dart';
 
 class WishlistScreen extends StatefulWidget {
   @override

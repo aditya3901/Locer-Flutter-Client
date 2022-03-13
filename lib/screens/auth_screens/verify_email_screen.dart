@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:locer/screens/auth_screens/login_screen.dart';
-import 'package:locer/screens/tabs_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../screens.dart';
 
 const String _registerUrl =
     "https://locerappdemo.herokuapp.com/api/users/register";

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:locer/screens/order_confirmed_screen.dart';
+import 'screens.dart';
 import 'package:locer/utils/db/products_database.dart';
 import 'package:locer/utils/models/cart_item_model.dart';
 import 'package:http/http.dart' as http;

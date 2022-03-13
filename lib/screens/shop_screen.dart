@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:locer/providers/theme_provider.dart';
-import 'package:locer/screens/product_detail_screen.dart';
+import 'screens.dart';
 import 'package:locer/utils/models/child_model.dart';
 import 'package:locer/utils/networking.dart';
 import 'package:locer/utils/models/parent_model.dart';

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:locer/providers/theme_provider.dart';
-import 'package:locer/screens/checkout_screen.dart';
+import '../../utils/models/models.dart';
+import '../screens.dart';
 import 'package:locer/utils/db/products_database.dart';
-import 'package:locer/utils/models/cart_item_model.dart';
 import 'package:locer/widgets/main_drawer.dart';
 import 'package:provider/provider.dart';
+
 
 class CartScreen extends StatefulWidget {
   @override

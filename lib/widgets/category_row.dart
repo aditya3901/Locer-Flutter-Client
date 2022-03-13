@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:locer/screens/category_screens/beverages_screen.dart';
-import 'package:locer/screens/category_screens/personal_care_screen.dart';
-import 'package:locer/screens/category_screens/snacks_screen.dart';
-import 'package:locer/screens/category_screens/staples_screen.dart';
+import '../screens/screens.dart';
 
 class CategoryRow extends StatelessWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:locer/screens/navBar_screens/cart_screen.dart';
+import 'screens.dart';
 import 'package:lottie/lottie.dart';
 
 class OrderConfirmed extends StatelessWidget {

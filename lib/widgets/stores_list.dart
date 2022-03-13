@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:locer/providers/theme_provider.dart';
-import 'package:locer/screens/shop_screen.dart';
+import '../screens/screens.dart';
 import 'package:locer/utils/networking.dart';
-import 'package:locer/utils/models/store_model.dart';
+import '../utils/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:locer/providers/theme_provider.dart';
-import 'package:locer/utils/models/child_model.dart';
-import 'package:locer/utils/models/store_model.dart';
+import '../../utils/models/models.dart';
 import 'package:locer/utils/networking.dart';
 import 'package:locer/widgets/category_shop_item.dart';
 import 'package:provider/provider.dart';

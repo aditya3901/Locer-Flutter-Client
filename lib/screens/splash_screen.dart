@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:locer/screens/auth_screens/login_screen.dart';
-import 'package:locer/screens/tabs_screen.dart';
+import 'screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
