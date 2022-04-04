@@ -77,24 +77,6 @@ class MainDrawer extends StatelessWidget {
                 }));
               },
             ),
-            drawerItem(
-              "Locer Express",
-              Icons.track_changes,
-              () {
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: const Text("Coming Soon.."),
-                    duration: const Duration(seconds: 2),
-                    action: SnackBarAction(
-                      label: "Dismiss",
-                      onPressed:
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar,
-                    ),
-                  ),
-                );
-              },
-            ),
             const Divider(thickness: 1),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

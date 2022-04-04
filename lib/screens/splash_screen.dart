@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (json != null) {
           Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
         } else {
-          Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+          Navigator.of(context).pushReplacementNamed(SignUpScreen.routeName);
         }
       },
     );

@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +15,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  Position? currentPosition;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -108,75 +105,6 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _showSpinner = false;
       });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getLocation();
-  }
-
-  void _getLocation() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: ListTile(
-              contentPadding: const EdgeInsets.all(0),
-              title: Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  "Location Permission Denied",
-                  style: Theme.of(context).textTheme.headline1?.copyWith(
-                        fontSize: 18,
-                      ),
-                ),
-              ),
-              subtitle: const Text(
-                "Default PINCODE set to 841301. You can change your location later from the Home Page.",
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  "OK",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-        );
-        return;
-      } else {
-        currentPosition = await Geolocator.getCurrentPosition();
-        _getAddress(currentPosition?.latitude, currentPosition?.longitude);
-      }
-    } else {
-      currentPosition = await Geolocator.getCurrentPosition();
-      _getAddress(currentPosition?.latitude, currentPosition?.longitude);
-    }
-  }
-
-  void _getAddress(latitude, longitude) async {
-    try {
-      List<Placemark> placemark = await GeocodingPlatform.instance
-          .placemarkFromCoordinates(latitude, longitude);
-
-      Placemark place = placemark[0];
-      final prefs = await SharedPreferences.getInstance();
-      setState(() {
-        prefs.setString("location_pin", place.postalCode!);
-      });
-    } catch (e) {
-      print("GeoCoding Error : $e");
     }
   }
 

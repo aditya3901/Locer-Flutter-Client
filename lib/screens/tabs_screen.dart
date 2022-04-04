@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../local_notification_service.dart';
 import 'screens.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -11,89 +12,51 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  String deviceTokenToSendPushNotification = "";
+
   @override
   void initState() {
     super.initState();
-    final fbm = FirebaseMessaging.instance;
-    fbm.requestPermission();
-    // If app is on foreground
-    FirebaseMessaging.onMessage.listen((message) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          content: ListTile(
-            contentPadding: const EdgeInsets.all(0),
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "${message.notification?.title}",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-            subtitle: Text(
-              "${message.notification?.body}",
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text(
-                "Later",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text(
-                "OK",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-      );
-      return;
-    });
-    // If app is in background
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          content: ListTile(
-            contentPadding: const EdgeInsets.all(0),
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "${message.notification?.title}",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-            subtitle: Text(
-              "${message.notification?.body}",
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text(
-                "Later",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text(
-                "OK",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-      );
-      return;
-    });
+
+    getDeviceTokenToSendNotification();
+
+    FirebaseMessaging.instance.getInitialMessage().then(
+      (message) {
+        if (message != null) {
+          print("New Notification");
+        }
+      },
+    );
+
+    FirebaseMessaging.onMessage.listen(
+      (message) {
+        print("FirebaseMessaging.onMessage.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data11 ${message.data}");
+          LocalNotificationService.createanddisplaynotification(message);
+        }
+      },
+    );
+
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (message) {
+        print("FirebaseMessaging.onMessageOpenedApp.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data22 ${message.data['_id']}");
+        }
+      },
+    );
+  }
+
+  Future<void> getDeviceTokenToSendNotification() async {
+    final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+    final token = await _fcm.getToken();
+    deviceTokenToSendPushNotification = token.toString();
+    print("Token Value $deviceTokenToSendPushNotification");
   }
 
   final PersistentTabController _controller =
